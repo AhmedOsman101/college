@@ -1,6 +1,7 @@
-def inFloatRange(value, start=0, end=1):
-  return start <= value and value < end
+# def inFloatRange(value, start=0, end=1):
+#   return start <= value and value < end
 
+inFloatRange = lambda value, start=0, end=0: start <= value and value < end
 
 def getGrade(percentage: float):
   if inFloatRange(percentage, 0, 101):

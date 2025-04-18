@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 /*
 Q1. Write a C program that does the following using arrays:

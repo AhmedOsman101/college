@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 
 /*
@@ -140,26 +141,25 @@ void q6() {
 Q7. Sort an Array in Ascending Order
 - Accept N numbers, sort them in ascending order, and display the sorted array.
 */
-
 void bubbleSort(int arr[], const int len, const char mode) {
   for (int i = 0; i < len; i++) {
     short swapped = 0;
 
-    for (int j = i; j < len; j++) {
+    for (int j = 0; j < len - i - 1; j++) {
       int temp;
 
-      if (mode == 'a') { // mode "a" for decending order
-        if (arr[j] < arr[i]) {
-          temp = arr[j];
-          arr[j] = arr[i];
-          arr[i] = temp;
+      if (mode == 'a') { // mode "a" for ascending order
+        if (arr[j + 1] < arr[j]) {
+          temp = arr[j + 1];
+          arr[j + 1] = arr[j];
+          arr[j] = temp;
           swapped = 1; // Set the flag if a swap happened
         }
-      } else if (mode == 'd') { // mode "d" for ascending order
-        if (arr[i] < arr[j]) {
-          temp = arr[i];
-          arr[i] = arr[j];
-          arr[j] = temp;
+      } else if (mode == 'd') { // mode "d" for decending order
+        if (arr[j] < arr[j + 1]) {
+          temp = arr[j];
+          arr[j] = arr[j + 1];
+          arr[j + 1] = temp;
           swapped = 1; // Set the flag if a swap happened
         }
       }
@@ -190,22 +190,140 @@ void q7() {
   printf("\n");
 }
 
-void q8() {}
+/*
+Q8. Merge Two Arrays
+- Accept two arrays from the user and merge them into a single array.
+*/
+void q8() {
+  int arr1[3], arr2[3], merged[6];
 
-void q9() {}
+  printf("Add 3 elements to array 1: ");
 
-void q10() {}
+  for (int i = 0; i < 3; i++) scanf("%d", &arr1[i]);
+
+  printf("Add 3 elements to array 2: ");
+
+  for (int i = 0; i < 3; i++) scanf("%d", &arr2[i]);
+
+  printf("Merged array: { ");
+
+  for (int i = 0; i < 6; i++) {
+    // 3 % 3 = 0; 4 % 3 = 1; 5 % 3 = 2;
+    merged[i] = i < 3 ? arr1[i] : arr2[i % 3];
+    printf("%d ", merged[i]);
+  }
+
+  printf("}\n");
+}
+
+void q9() {
+  int len;
+
+  printf("Enter the length: ");
+  scanf("%d", &len);
+
+  int nums[len], unique[len], uniqueCount = 0;
+  printf("Enter the numbers: ");
+
+  for (short i = 0; i < len; i++) scanf("%d", &nums[i]);
+
+  for (short i = 0; i < len; i++) {
+    short j = 0, isUnique = 1;
+    short n = nums[i];
+
+    do {
+      if (uniqueCount == 0) break;
+
+      /*
+        n xor unique[j]
+        0 => it's duplicated, then we break and mark it as not unique
+        any other value => it's unique
+      */
+      if (!(n ^ unique[j])) { // !0 => 1 (true)
+        isUnique = 0;
+        break;
+      }
+
+      j++;
+    } while (j < uniqueCount);
+
+    if (isUnique) {
+      unique[uniqueCount] = n;
+      uniqueCount++;
+    }
+  }
+
+  printf("Unique items: ");
+
+  for (short i = 0; i < uniqueCount; i++) printf("%d ", unique[i]);
+
+  printf("\n");
+}
+
+/*
+Q10. Check if the Array is a Palindrome
+- Accept N numbers and check if the array reads the same forward and backward.
+*/
+void q10() {
+  int len;
+  short isPalindrome = 1;
+
+  printf("Enter the length: ");
+  scanf("%d", &len);
+  float mid = len % 2 == 0 ? ceil((len / 2.0) - 1) : ceil(len / 2.0);
+
+  int nums[len];
+  printf("Enter the numbers: ");
+
+  for (short i = 0; i < len; i++) scanf("%d", &nums[i]);
+
+  for (short i = 0; i <= mid; i++) {
+    int last = len - i - 1;
+
+    if (nums[i] != nums[last]) {
+      isPalindrome = 0;
+
+      printf("It's not a palindrome\nItem %d doesn't match item %d\n",
+        i, last
+      );
+      break;
+    }
+  }
+
+  if (isPalindrome) printf("It's a palindrome!\n");
+}
 
 int main() {
-  // q1();
-  // q2();
-  // q3();
-  // q4();
-  // q5();
-  // q6();
+  printf("# ---- Question 1 ---- #\n");
+  q1();
+
+  printf("\n# ---- Question 2 ---- #\n");
+  q2();
+
+  printf("\n# ---- Question 3 ---- #\n");
+  q3();
+
+  printf("\n# ---- Question 4 ---- #\n");
+  q4();
+
+  printf("\n# ---- Question 5 ---- #\n");
+  q5();
+
+  printf("\n# ---- Question 6 ---- #\n");
+  q6();
+
+  printf("\n# ---- Question 7 ---- #\n");
   q7();
-  // q8();
-  // q9();
-  // q10();
+
+  printf("\n# ---- Question 8 ---- #\n");
+  q8();
+
+  printf("\n# ---- Question 9 ---- #\n");
+  q9();
+
+  printf("\n# ---- Question 10 ---- #\n");
+  q10();
+
+  printf("\n# ---- Thank you for your patience! ---- #\n");
   return 0;
 }

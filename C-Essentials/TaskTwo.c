@@ -105,7 +105,7 @@ void q5() {
   largest = nums[0]; // set the first element as the pivot
   smallest = nums[0]; // set the first element as the pivot
 
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < len; i++) {
     int n = nums[i];
 
     if (n > largest) largest = n;

@@ -111,6 +111,41 @@ struct Student searchById(struct StudentArray *arr) {
 
   return NotFound;
 }
+
+struct Student readStudent(const unsigned int id) {
+  struct Student s;
+  s.index = -1;
+
+  if (id == 0) s.id = generateId(); // Automatically generated ID
+  else s.id = id;
+
+  printf("--------- Reading Details of Student %-2u ---------\n", s.id);
+  printf("Enter your name: ");
+  readline(s.name, NAME_LENGTH, stdin);
+
+  unsigned int total = 0;
+
+  for (int i = 0; i < GRADES_COUNT; i++) {
+    printf("Enter your grades for %s: ", SUBJECTS[i]);
+    unsigned short grade;
+    scanf("%hu", &grade); // %hu for unsigned short
+    clearInputBuffer(); // Consume the newline
+
+    if (grade < 0 || grade > 100) {
+      printf("Grade must between 0-100. Using 0 instead.\n");
+      grade = 0;
+    }
+
+    s.grades[i] = grade;
+
+    total += s.grades[i];
+  }
+
+  s.averageGrades = total * 1.0 / GRADES_COUNT; // multiply by 1.0 to ensure float division
+
+  return s;
+}
+
 void searchByName(struct StudentArray *arr) {
   char target[NAME_LENGTH];
   printf("Enter the name to search for: ");

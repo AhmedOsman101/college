@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utils.h"
 
 #define NAME_LENGTH 20
 #define GRADES_COUNT 5
@@ -48,11 +49,6 @@ void freeStudentArray(struct StudentArray *arr) {
 int generateId() {
   static int count = 1; // Static variable retains value between calls
   return count++;
-}
-
-void readline(char* restrict s, int n, FILE *restrict stream) {
-  fgets(s, n, stream);
-  s[strcspn(s, "\n")] = '\0'; // Remove the newline '\n' character
 }
 
 // Clear input buffer

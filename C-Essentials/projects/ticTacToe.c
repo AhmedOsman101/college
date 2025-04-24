@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "utils.h"
 
 const unsigned short WINNING_COMBOS[8][3] = {
   {0, 1, 2}, // Top row
@@ -45,7 +46,9 @@ void printBoard(const enum Cell board[9]) {
 
 enum Boolean makeMove(enum Cell board[9]) {
   printf("Make a move (1-9): ");
-  scanf("%hu", %)
+  unsigned short move;
+  scanf("%hu", &move);
+  
   return true;
 }
 

@@ -128,6 +128,24 @@ void searchByName(struct StudentArray *arr) {
   if (!found) printf("No student found with name %s\n", target);
 }
 
+void greetUser() {
+  printf("Welcome to the Student Management System!\n");
+  printf("Manage student records with ease.\n");
+  printf("-------------------------------------------------\n");
+}
+
+void printCommands() {
+  printf("\nStudent Management System\n");
+  printf("1: Add Student\n");
+  printf("2: Search by ID\n");
+  printf("3: Search by Name\n");
+  printf("4: Delete Student\n");
+  printf("5: Update Student\n");
+  printf("6: Print All Students\n");
+  printf("0: Exit\n");
+  printf("Enter your choice: ");
+}
+
 int main() {
   printf("hello world\n");
 

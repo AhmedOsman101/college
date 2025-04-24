@@ -51,11 +51,6 @@ int generateId() {
   return count++;
 }
 
-// Clear input buffer
-void clearInputBuffer() {
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF);
-}
 
 void printStudent(const struct Student *student) {
 

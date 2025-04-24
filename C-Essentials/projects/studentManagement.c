@@ -146,6 +146,58 @@ struct Student readStudent(const unsigned int id) {
   return s;
 }
 
+void addStudent(struct StudentArray *arr) {
+  /*
+  If the items count is bigger than the capacity:
+    - Double the capacity of the array (if 0 initialize with 2)
+    - Reallocate memory for the array to be twice the size
+    - Memory allocation works by multiplying the array's capacity by the size of the datatype in bytes
+   */
+  if (arr->count >= arr->capacity) {
+    arr->capacity = (arr->capacity == 0) ? 2 : arr->capacity * 2;
+    arr->students = realloc(arr->students, arr->capacity * sizeof(struct Student));
+
+    if (arr->students == NULL) {
+      printf("Memory allocation failed!\n");
+      exit(1);
+    }
+  }
+
+  arr->students[arr->count] = readStudent(0);
+  arr->count++;
+}
+
+void deleteStudent(struct StudentArray *arr) {
+
+  if (arr->count == 0) {
+    printf("The student list is empty.\nPlease use the 'Add Student' command first to add students.\n");
+    return;
+  }
+
+  struct Student targetStudent = searchById(arr);
+  if (targetStudent.id == 0) return;
+
+  printf("Delete student with ID %u? (y/n): ", targetStudent.id);
+  char confirm;
+  scanf("%c", &confirm);
+  clearInputBuffer();
+  if (tolower(confirm) != 'y') {
+    printf("Deletion cancelled.\n");
+    return;
+  }
+
+
+  // Shift elements to overwrite the deleted student
+  for (unsigned int i = targetStudent.index; i < arr->count - 1; i++) {
+    arr->students[i] = arr->students[i + 1];
+  }
+
+  arr->count--;
+
+  printf("Student with ID %u deleted successfully!\n", targetStudent.id);
+}
+
+
 void searchByName(struct StudentArray *arr) {
   char target[NAME_LENGTH];
   printf("Enter the name to search for: ");

@@ -197,6 +197,32 @@ void deleteStudent(struct StudentArray *arr) {
   printf("Student with ID %u deleted successfully!\n", targetStudent.id);
 }
 
+void updateStudent(struct StudentArray *arr) {
+
+  if (arr->count == 0) {
+    printf("The student list is empty.\nPlease use the 'Add Student' command first to add students.\n");
+    return;
+  }
+
+  struct Student student = searchById(arr);
+  if (student.id == 0) return;
+
+  struct Student updatedStudent = readStudent(student.id);
+
+  printf("Update student with ID %u? (y/n): ", student.id);
+  char confirm;
+  scanf("%c", &confirm);
+  clearInputBuffer();
+  if (tolower(confirm) != 'y') {
+    printf("Update cancelled.\n");
+    return;
+  }
+
+  arr->students[student.index] = updatedStudent;
+
+  printf("Student with ID %u updated successfully!\n", student.id);
+}
+
 
 void searchByName(struct StudentArray *arr) {
   char target[NAME_LENGTH];

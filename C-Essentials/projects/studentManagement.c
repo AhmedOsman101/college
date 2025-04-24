@@ -31,6 +31,21 @@ const struct Student NotFound = {
 };
 
 
+void initStudentArray(struct StudentArray *arr) {
+  arr->students = NULL;
+  arr->count = 0;
+  arr->capacity = 0;
+}
+
+// Free the dynamic array
+void freeStudentArray(struct StudentArray *arr) {
+  free(arr->students);
+  arr->students = NULL;
+  arr->count = 0;
+  arr->capacity = 0;
+}
+
+
 int main() {
   printf("hello world\n");
 

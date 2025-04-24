@@ -45,6 +45,53 @@ void freeStudentArray(struct StudentArray *arr) {
   arr->capacity = 0;
 }
 
+int generateId() {
+  static int count = 1; // Static variable retains value between calls
+  return count++;
+}
+
+void readline(char* restrict s, int n, FILE *restrict stream) {
+  fgets(s, n, stream);
+  s[strcspn(s, "\n")] = '\0'; // Remove the newline '\n' character
+}
+
+// Clear input buffer
+void clearInputBuffer() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void printStudent(const struct Student *student) {
+
+  if (student == NULL) {
+    printf("Error: Invalid student data\n");
+    return;
+  }
+
+  printf("------------- Details of Student %-2u -------------\n", student->id);
+  printf("Student ID: %u\n", student->id);
+  printf("Name: %s\n", student->name);
+  printf("Grades:\n");
+
+  for (int i = 0; i < GRADES_COUNT; i++) {
+    printf("  %s: %hu\n", SUBJECTS[i], student->grades[i]);
+  }
+
+  printf("Average Grade: %.2f\n", student->averageGrades);
+  printf("-------------------------------------------------\n");
+}
+
+void printStudents(struct StudentArray *arr) {
+  if (arr->count == 0) {
+    printf("The student list is empty.\nPlease use the 'Add Student' command first to add students.\n");
+    return;
+  }
+
+  for (unsigned int i = 0; i < arr->count; i++) {
+    printStudent(&arr->students[i]);
+  }
+}
+
 
 int main() {
   printf("hello world\n");

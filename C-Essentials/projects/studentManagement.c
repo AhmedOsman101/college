@@ -92,6 +92,41 @@ void printStudents(struct StudentArray *arr) {
   }
 }
 
+struct Student searchById(struct StudentArray *arr) {
+  unsigned int target;
+
+  printf("Enter ID to search for: ");
+  scanf("%u", &target);
+  clearInputBuffer();
+
+  for (unsigned int i = 0; i < arr->count; i++) {
+    if (arr->students[i].id == target) {
+      struct Student s = arr->students[i];
+      s.index = i;
+      return s;
+    }
+  }
+
+  printf("Student with ID %u was not found.\n", target);
+
+  return NotFound;
+}
+void searchByName(struct StudentArray *arr) {
+  char target[NAME_LENGTH];
+  printf("Enter the name to search for: ");
+  readline(target, NAME_LENGTH, stdin);
+
+  unsigned short found = 0;
+  for (unsigned int i = 0; i < arr->count; i++) {
+    // search for partial case case-insensitive matches
+    if (strcasestr(arr->students[i].name, target) != NULL) {
+      printStudent(&arr->students[i]);
+      found = 1;
+    }
+  }
+
+  if (!found) printf("No student found with name %s\n", target);
+}
 
 int main() {
   printf("hello world\n");

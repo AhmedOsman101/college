@@ -82,7 +82,6 @@ enum boolean checkWinning(struct GameState *state) {
       state->board[a] == state->board[b] &&
       state->board[b] == state->board[c]
     ) {
-      toggleTurn(state);
       printf("\nPlayer %c Won!\n", state->turn == X ? 'O' : 'X');
       return true;
     }
@@ -101,6 +100,8 @@ enum boolean checkDraw(struct GameState *state) {
 }
 
 void mainLoop(struct GameState *state) {
+  printBoard(state->board);
+
   while (!state->isOver) {
     char command;
     if (!makeMove(state)) continue;
@@ -111,6 +112,7 @@ void mainLoop(struct GameState *state) {
       clearInputBuffer();
       if (tolower(command) == 'y') {
         initializeGame(state);
+        printBoard(state->board);
       } else {
         printf("\nGoodbye\n");
         exit(0);
@@ -122,7 +124,6 @@ void mainLoop(struct GameState *state) {
 int main() {
   struct GameState state;
   initializeGame(&state);
-  printBoard(state.board);
   mainLoop(&state);
 
   return 0;

@@ -260,7 +260,54 @@ void printCommands() {
 }
 
 int main() {
-  printf("hello world\n");
+  greetUser();
 
+  struct StudentArray arr;
+  initStudentArray(&arr);
+  unsigned short command = 1;
+
+  while (command != 0) {
+    printCommands();
+    scanf("%hu", &command);
+    clearInputBuffer();
+    struct Student s;
+
+    switch (command) {
+      case 0:
+        break;
+
+      case 1:
+        addStudent(&arr);
+        break;
+
+      case 2:
+        s = searchById(&arr);
+        if (s.id != 0) {
+          printStudent(&s);
+        }
+        break;
+
+      case 3:
+        searchByName(&arr);
+        break;
+
+      case 4:
+        deleteStudent(&arr);
+        break;
+
+      case 5:
+        updateStudent(&arr);
+        break;
+
+      case 6:
+        printStudents(&arr);
+        break;
+    }
+  }
+
+  printf("Goodbye!\n");
+
+  // Clean up
+  freeStudentArray(&arr);
   return 0;
 }

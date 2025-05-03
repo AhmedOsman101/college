@@ -1,14 +1,17 @@
 #include <stdio.h>
-#include <string.h>
+#include <string.h> // String manipulation functions
 
+// Define filename as a constant
 const char FILENAME[11] = "grades.txt";
 
+// Student structure
 struct Student {
-  char name[50];
-  int marks[3];
-  float average;
+  char name[50]; // Student name
+  int marks[3]; // Marks for 3 subjects
+  float average; // Calculated average
 };
 
+// Function to calculate average marks
 void calculateAverage(struct Student *s) {
   float sum = 0;
 
@@ -19,34 +22,36 @@ void calculateAverage(struct Student *s) {
   s->average = sum / 3.0;
 }
 
+// Function to read a line, removing newline
 void readline(char* restrict s, int n, FILE *restrict stream) {
   fgets(s, n, stream);
-  s[strcspn(s, "\n")] = '\0'; // Remove the newline '\n' character
+  s[strcspn(s, "\n")] = '\0';
 }
 
-// Clear input buffer
+// Function to clear input buffer
 void clearInputBuffer() {
   int c;
 
   while ((c = getchar()) != '\n' && c != EOF);
 }
 
-
 int main() {
-  FILE *file = fopen(FILENAME, "w"); // Open file in write mode
-  int character;
+  // Open file in write mode ("w"). Creates or overwrites.
+  FILE *file = fopen(FILENAME, "w");
+  int character; // Variable for reading characters
 
-  // check if file was opened successfully
+  // Check if file opened successfully for writing
   if (file == NULL) {
     printf("Error opening %s!\n", FILENAME);
     return 1;
   }
 
+  // Array of 3 Student structures
   struct Student students[3];
 
+  // Input data for 3 students
   for (int i = 0; i < 3; i++) {
     printf("Enter details for student %d:\n", i + 1);
-
     printf("Name: ");
     readline(students[i].name, 50, stdin);
 
@@ -55,11 +60,12 @@ int main() {
       scanf("%d", &students[i].marks[j]);
     }
 
-    clearInputBuffer();
+    clearInputBuffer(); // Clear buffer after scanf
 
-    calculateAverage(&students[i]);
+    calculateAverage(&students[i]); // Calculate average
   }
 
+  // Write student name and average to file
   for (int i = 0; i < 3; i++) {
     struct Student s = students[i];
     fprintf(file,
@@ -68,26 +74,27 @@ int main() {
     );
   }
 
-  fclose(file); // close the file the reopen it in read mode
+  // Close the file after writing
+  fclose(file);
 
-  file = fopen(FILENAME, "r"); // Open file in read mode
+  // Reopen the file in read mode ("r")
+  file = fopen(FILENAME, "r");
 
-  // check if file was opened successfully
+  // Check if file opened successfully for reading
   if (file == NULL) {
     printf("Error reading from %s!\n", FILENAME);
     return 1;
   }
 
-
   printf("Reading content from %s:\n\n", FILENAME);
 
-  // Read the file character by character until the end of the file (EOF) is reached
+  // Read and print file content character by character
   while ((character = fgetc(file)) != EOF) {
-    // Print the character to the console
     putchar(character);
   }
 
-  // close the file stream
+  // Close the file after reading
   fclose(file);
-  return 0;
+
+  return 0; // Indicate success
 }

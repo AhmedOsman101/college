@@ -1,4 +1,3 @@
-Output output/cd.gif
 Output output/cd.mp4
 
 Set Shell zsh

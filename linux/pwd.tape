@@ -1,4 +1,3 @@
-Output output/pwd.gif
 Output output/pwd.mp4
 
 Set Shell zsh

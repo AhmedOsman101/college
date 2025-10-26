@@ -1,0 +1,8 @@
+flowchart TD
+Start([START]) -->
+InputPrompt[/Print 'Enter a number: '/] -->
+Input[/Read n/] -->
+CheckOdd{n % 2 == 0} -- True -->
+PrintEven[/Print Even/] --> End
+CheckOdd -- False --> PrintOdd[/Print Odd/] --> End
+End([END])

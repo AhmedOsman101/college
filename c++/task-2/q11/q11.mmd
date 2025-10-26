@@ -1,0 +1,38 @@
+%% flowchart TD
+
+%% A[Start] --> B["TotalSales = 0<br/>TotalCommission = 0"]
+%% B --> C["Read Representative Number (N)"]
+%% C --> D{Is N = 555?}
+%% D -->|Yes| E["Print TotalSales<br/>and TotalCommission"]
+%% E --> F[End]
+
+%% D -->|No| G["Read Name (M) and Sales Amount (A)"]
+%% G --> H{Is A < 50,000?}
+%% H -->|Yes| I[Commission = A * 0.025]
+%% H -->|No| J[Commission = A * 0.055]
+%% I --> K[Print N, M, A, Commission]
+%% J --> K
+%% K --> L[TotalSales += A<br/>TotalCommission += Commission]
+%% L --> M["Read Next Representative Number (N)"]
+%% M --> D
+
+flowchart TD
+START([START]) -->
+AssignTotals["TotalSales = 0<br/>TotalCommission = 0"] -->
+ReadN["Read Representative Number (N)"] -->
+CheckEnd{N == 555}
+  CheckEnd -- True -->
+    PrintTotals["Print TotalSales<br/>and TotalCommission"] -->
+    End(["End"])
+  CheckEnd -- False -->
+    ReadData["Read Name (M) and Sales Amount (A)"] -->
+    CheckAmount{A < 50,000}
+      CheckAmount -- True -->
+        CalcLow[Commission = A * 0.025] -->
+        PrintData[/Print N, M, A, Commission/] -->
+        UpdateTotals[TotalSales += A<br/>TotalCommission += Commission] -->
+        ReadNext[/"Read Next Representative Number (N)"/] -->
+        CheckEnd
+      CheckAmount -- False -->
+        CalcHigh[Commission = A * 0.055] -->
+        PrintData

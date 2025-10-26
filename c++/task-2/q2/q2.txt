@@ -1,0 +1,10 @@
+Start
+Initialize i = 0, sum = 0
+Loop i < 5:
+  Print "Iteration | Sum"
+  Print "------------------"
+  IF i % 2 == 0:
+    Increment sum += i
+  Print "i | sum"
+  Increment i += 1
+End

@@ -1,0 +1,10 @@
+flowchart TD
+Start([START]) -->
+InputPrompt1[/Print 'Enter first number: '/] -->
+Input1[/Read x/] -->
+InputPrompt2[/Print 'Enter second number: '/] -->
+Input2[/Read y/] -->
+Check{x < y} -- True -->
+PrintEven[/Print y is bigger/] --> End
+Check -- False --> PrintOdd[/Print x is bigger/] --> End
+End([END])

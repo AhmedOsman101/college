@@ -1,0 +1,10 @@
+flowchart TD
+START([START]) -->
+Assign[i = 0] -->
+Loop{i < 5}
+Loop -- False --> End(["End"])
+Loop -- True -->
+  PrintTableHeader[/"Print 'Iteration &vert; Value of i'"/] -->
+  PrintSeparator[/"Print '------------------------------------------'"/] -->
+  PrintValues[/"Print 'i &vert; i + 1'"/] -->
+  Increment["i += 1"] --> Loop

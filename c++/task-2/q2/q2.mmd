@@ -1,0 +1,12 @@
+flowchart TD
+START([START]) -->
+Assign[i = 0, sum = 0] -->
+Loop{i < 5}
+Loop -- False --> End(["End"])
+Loop -- True -->
+  PrintTableHeader[/"Print 'Iteration &vert; Sum'"/] -->
+  PrintSeparator[/"Print '------------------------------------------'"/] -->
+  CheckOdd{i % 2 != 0} -- False --> PrintValues
+  CheckOdd -- True --> IncrementSum[sum += i] -->
+  PrintValues[/"Print 'i &vert; sum'"/] -->
+  Increment["i += 1"] --> Loop

@@ -1,0 +1,11 @@
+flowchart TD
+START([START]) -->
+ReadN[/Read n/] -->
+Assign[i = 1] -->
+Loop{i <= n}
+  Loop -- False --> End(["End"])
+  Loop -- True --> Check{n % i == 0?}
+    Check -- False --> Increment
+    Check -- True --> Print[/"Print i"/]
+    --> Increment[i = i + 1]
+    --> Loop

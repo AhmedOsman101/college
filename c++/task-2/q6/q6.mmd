@@ -1,0 +1,21 @@
+flowchart TD
+Start(["START"]) -->
+Prompt[/"Print 'enter your grade: '"/] -->
+Input[/"Read grade"/] -->
+Condition1{"grade >= 90 && grade <= 100"}
+  Condition1 -- True --> PrintA[/"Print A"/]
+  Condition1 -- False -->
+Condition2{"grade >= 80 && grade <= 89"}
+  Condition2 -- True --> PrintB[/"Print B"/]
+  Condition2 -- False -->
+Condition3{"grade >= 70 && grade <= 79"}
+  Condition3 -- True --> PrintC[/"Print C"/]
+  Condition3 -- False -->
+Condition4{"grade >= 60 && grade <= 69"}
+  Condition4 -- True --> PrintD[/"Print D"/]
+  Condition4 -- False -->
+PrintFail[/"Print Fail"/] --> End(["END"])
+PrintA --> End
+PrintB --> End
+PrintC --> End
+PrintD --> End

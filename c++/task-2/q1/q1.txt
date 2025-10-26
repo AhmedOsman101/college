@@ -1,0 +1,8 @@
+Start
+Assign i = 0
+Loop i < 5:
+  Print "Iteration | Value of i"
+  Print "-------------------------"
+  Print "i | i + 1"
+  Increment i += 1
+End

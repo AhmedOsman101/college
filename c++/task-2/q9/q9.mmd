@@ -1,0 +1,26 @@
+flowchart TD
+START([START]) -->
+ReadN[/Read n/] -->
+Assign[i = 2, j = 2] -->
+LoopI{i <= n}
+  LoopI -- False -->
+    End(["End"])
+  LoopI -- True -->
+    Assign2[isPrime = true] -->
+    LoopJ{j <= i}
+      LoopJ -- False -->
+        CheckPrint{isPrime?}
+          CheckPrint -- True -->
+            PrintI[/Print i/] -->
+            IncrementI[i = i + 1] -->
+            LoopI
+          CheckPrint -- False -->
+            IncrementI
+      LoopJ -- True -->
+        CheckPrime{i % j == 0}
+          CheckPrime -- True -->
+            Assign3[isPrime = false] -->
+            CheckPrint
+          CheckPrime -- False -->
+            IncrementJ[j = j + 1] -->
+            LoopJ

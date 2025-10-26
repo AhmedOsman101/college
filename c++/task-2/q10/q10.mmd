@@ -1,0 +1,13 @@
+flowchart TD
+  START([START]) -->
+  ReadInputs[/Read x, n/] -->
+  InitY[y = 0, i = 1] -->
+  OuterLoop{i <= n}
+  OuterLoop -- False --> PrintY[/"Print y"/] --> End(["End"])
+  OuterLoop -- True --> InitFact[factorial = 1, j = 1] -->
+  InnerLoop{j <= i}
+  InnerLoop -- True --> UpdateFact[factorial = factorial * j] -->
+  IncrementJ[j = j + 1] --> InnerLoop
+  InnerLoop -- False --> ComputeTerm["term = (1 / factorial) * ((x + 5) / (2 * x))<sup>i</sup>"] -->
+  AddTerm[y = y + term] -->
+  IncrementI[i = i + 1] --> OuterLoop

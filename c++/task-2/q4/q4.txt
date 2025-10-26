@@ -1,0 +1,8 @@
+Start
+Print "Enter a number: "
+Input n
+IF n % 2 == 0:
+  Print "Even"
+Else:
+  Print "Odd"
+End

@@ -1,0 +1,13 @@
+Start
+Input x, n
+Assign y = 0, i = 1
+Loop i <= n:
+  Assign factorial = 1, j = 1
+  Loop j <= i:
+    Assign factorial = factorial * j
+    Increment j += 1
+  Assign term = (1 / factorial) * ((x + 5) 2 * x) ^ 2
+  Assign y = y + term
+  Increment i += 1
+Print y
+End

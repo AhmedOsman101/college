@@ -1,0 +1,8 @@
+Start
+Print "Enter a number: "
+Read n
+Assign i = 1
+Loop i <= 12:
+  Print "n * i"
+  Increment i += 1
+End

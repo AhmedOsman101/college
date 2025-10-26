@@ -1,0 +1,13 @@
+Start
+Print "Enter limit: "
+Input n
+Assign i = 2
+Loop i <= n:
+  Assign j = 2, isPrime = true
+  Loop j < i:
+    IF i % j == 0:
+      Assign isPrime = false
+      Break
+  IF isPrime == true:
+    Print i
+End

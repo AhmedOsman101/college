@@ -1,0 +1,14 @@
+Start
+Print "Enter your grade: "
+Input grade
+IF 90 <= grade && grade <= 100:
+  Print "A"
+Else if 80 <= grade && grade <= 89:
+  Print "B"
+Else if 70 <= grade && grade <= 79:
+  Print "C"
+Else if 60 <= grade && grade <= 69:
+  Print "D"
+Else:
+  Print "Failed"
+End

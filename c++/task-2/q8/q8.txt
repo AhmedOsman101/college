@@ -1,0 +1,8 @@
+Start
+Read n
+Assign i = 1
+Loop i <= n:
+  IF n % i == 0:
+    Print i
+  Increment i += 1
+End

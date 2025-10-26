@@ -1,3 +1,6 @@
 Start
 Print "Enter temprature in Celsius: "
+Input c
+Assign f = (c * 1.8) + 32
+Print f
 End

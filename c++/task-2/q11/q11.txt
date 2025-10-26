@@ -1,0 +1,18 @@
+Start
+Assign totalSales = 0, totalCommission = 0
+Read N # Representative Number
+While N != 555:
+  Read M, A # Name (M), Sales Amount (A)
+
+  IF A < 50000:
+    Assign commission = A * 0.025
+  Else:
+    commission = A * 0.055
+
+  Print N, M, A, commission
+  Assign totalSales += A
+  Assign totalCommission += commission
+  Read N # Next Representative Number
+
+Print totalSales, totalCommission
+End

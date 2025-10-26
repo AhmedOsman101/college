@@ -1,0 +1,10 @@
+Start
+Print "Enter first number: "
+Input x
+Print "Enter second number: "
+Input y
+IF x < y:
+  Print "y is bigger"
+Else:
+  Print "x is bigger"
+End

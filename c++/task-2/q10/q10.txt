@@ -1,13 +1,15 @@
-Start
+Begin
 Input x, n
-Assign y = 0, i = 1
-Loop i <= n:
-  Assign factorial = 1, j = 1
-  Loop j <= i:
-    Assign factorial = factorial * j
-    Increment j += 1
-  Assign term = (1 / factorial) * ((x + 5) 2 * x) ^ 2
-  Assign y = y + term
-  Increment i += 1
-Print y
+Set y = 0, i = 1
+For i <= n:
+  Set factorial = 1, j = 1
+  For j <= i:
+    Set factorial = factorial * j
+    Set j = j + 1
+  EndFor
+  Set term = (1 / factorial) * ((x + 5) / (2 * x)) ^ i
+  Set y = y + term
+  Set i = i + 1
+EndFor
+Output y
 End

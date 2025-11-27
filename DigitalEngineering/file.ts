@@ -76,3 +76,10 @@ generateTruthTable("A + B + C", or, true);
 generateTruthTable("A·B", (a, b) => and(a, b), false);
 generateTruthTable("A + B", (a, b) => or(a, b), false);
 generateTruthTable("~(A·B)", (a, b) => nand(a, b), false);
+
+// Actual circuit
+generateTruthTable(
+  "F",
+  (a, b, c) => or(and(not(a), not(b), c), and(a, b)),
+  false
+);

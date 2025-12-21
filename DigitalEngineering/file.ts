@@ -74,70 +74,67 @@ function nand(a: boolean, b: boolean, c?: boolean) {
   return not(and(a, b, c));
 }
 
-/* Truth tables */
+function generateCases(n: number) {
+  const cases: number[][] = [];
+  for (let i = 0; i < n; i++) cases.push([]);
 
-// 3 inputs
-// generateTruthTable("A·B·C", and, true);
-// generateTruthTable("~(A·B·C)", nand, true);
-// generateTruthTable("A + B + C", or, true);
+  const numOfRows = 2 ** n; // 2^2 = 4
+  for (let i = 0; i < n; i++) {
+    let current = true;
+    for (let j = 0; j < numOfRows; j++) {
+      const currentRowNum = 2 ** i;
+      if (j % currentRowNum === 0 || currentRowNum === 1) current = !current;
+      cases[n - (i + 1)][j] = Number(current);
+    }
+  }
 
-// 2 inputs
-// generateTruthTable("A·B", (a, b) => and(a, b), false);
-// generateTruthTable("A + B", (a, b) => or(a, b), false);
-// generateTruthTable("~(A·B)", (a, b) => nand(a, b), false);
-// generateTruthTable("A·B", (a, b) => nand(nand(a, b), nand(a, b)), false);
-// generateTruthTable("A+B", (a, b) => nand(nand(a, a), nand(b, b)), false);
+  return cases;
+}
 
-generateTruthTable(
-  "~A~B",
-  (a, b) =>
-    nand(nand(nand(a, a), nand(b, b)), nand(nand(a, a), nand(b, b))),
-  false
-);
-// generateTruthTable(
-//   "~A~BC",
-//   (a, b, c) =>
-//     nand(nand(nand(a, a), nand(b, b)), nand(nand(a, a), nand(b, b)), c),
-//   true
-// );
+type Alignment = "left" | "center" | "right";
 
-generateTruthTable(
-  "AB + ~A~BC",
-  (a, b, c) => {
-    const notA = nand(a, a);
-    const notB = nand(b, b);
-    const notAnotBC = nand(notA, notB, c);
-    const nandAB = nand(a, b);
-    const AB = nand(nandAB, nandAB);
-    const notABC = nand(notAnotBC, notAnotBC);
-    const notAB = nand(AB, AB);
-    const notNotABC = nand(notABC, notABC);
-    return nand(notAB, notNotABC);
-  },
-  true
-);
+function genTableAdvanced(
+  headers: any[],
+  arrays: any[][],
+  alignments?: Alignment[]
+): string {
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+  const transposed: any[][] = [];
 
-// Actual circuit
-// generateTruthTable(
-//   "F",
-//   (a, b, c) => or(and(not(a), not(b), c), and(a, b)),
-//   false
-// );
+  for (let i = 0; i < maxLength; i++) {
+    transposed[i] = arrays.map(col => (col[i] !== undefined ? col[i] : ""));
+  }
 
-// generateTruthTable(
-//   "F",
-//   (A, B, C) => {
-//     const ABnot = nand(
-//       nand(nand(A, A), nand(B, B)),
-//       nand(nand(A, A), nand(B, B))
-//     );
+  const alignmentChars = {
+    left: ":--",
+    center: ":-:",
+    right: "--:",
+  };
 
-//     const LHS = nand(nand(A, B), nand(A, B));
+  let markdown = "";
 
-//     const RHS = nand(ABnot, C as boolean);
+  if (transposed.length > 0) {
+    // Header row
+    markdown += `| ${headers.join(" | ")} |\n`;
 
-//     const result = nand(nand(LHS, LHS), nand(RHS, RHS));
-//     return result;
-//   },
-//   true
-// );
+    // Separator row with alignment
+    const defaultAlign = alignments || Array(arrays.length).fill("center");
+    const separators = defaultAlign.map(
+      (align: Alignment) => alignmentChars[align]
+    );
+    markdown += `| ${separators.join(" | ")} |\n`;
+
+    // Data rows
+    for (let i = 0; i < transposed.length; i++) {
+      markdown += `| ${transposed[i].join(" | ")} |\n`;
+    }
+  }
+
+  return markdown.trim();
+}
+
+console.log(genTableAdvanced(["A", "B"], generateCases(2)));
+console.log("-----------------------------------------------------");
+console.log(genTableAdvanced(["A", "B", "C"], generateCases(3)));
+console.log("-----------------------------------------------------");
+console.log(genTableAdvanced(["Control", "A0", "A1", "B0", "B1"], generateCases(5)));

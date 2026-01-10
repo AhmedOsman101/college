@@ -1,8 +1,17 @@
+// deno-lint-ignore-file
+import { markdownTable } from "markdown-table";
+
 type LogicFn = (...args: boolean[]) => boolean;
 type MultiLogicFn = (...args: boolean[]) => boolean[];
+type Alignment = "l" | "c" | "r" | "";
+
+type TruthTableResult<H extends readonly string[]> = {
+  headers: H;
+  columns: { [K in keyof H]: (number | boolean)[] };
+  alignments?: Alignment[];
+};
 
 /* ---------------- Basic Gates ---------------- */
-
 const and: LogicFn = (...args) => args.length > 0 && args.every(Boolean);
 
 const or: LogicFn = (...args) => args.length > 0 && args.some(Boolean);
@@ -10,8 +19,7 @@ const or: LogicFn = (...args) => args.length > 0 && args.some(Boolean);
 const not: LogicFn = a => !a;
 
 /* ---------------- Derived Gates ---------------- */
-
-const Nand: LogicFn = (...args) => !and(...args);
+const nand: LogicFn = (...args) => !and(...args);
 
 const nor: LogicFn = (...args) => !or(...args);
 
@@ -19,8 +27,7 @@ const xor: LogicFn = (...args) => args.reduce((acc, cur) => acc !== cur, false);
 
 const xnor: LogicFn = (...args) => !xor(...args);
 
-/* ----------------------------------------------- */
-
+/* ---------------- Helpers ---------------- */
 function generateBinaryCases(n: number): number[][] {
   const rows = 2 ** n;
   const cases: number[][] = [];
@@ -49,6 +56,11 @@ function generateTruthTableColumns(fn: LogicFn, terms: number): number[][] {
   }
 
   return [...inputColumns, outputColumn];
+}
+
+function formatCell(value: number | boolean): string {
+  if (typeof value === "boolean") return value ? "1" : "0";
+  return String(value);
 }
 
 function generateTruthTableColumnsMulti(
@@ -89,48 +101,6 @@ function generateHeaders(terms: number, outputLabel = "OUT"): string[] {
   return headers;
 }
 
-type Alignment = "left" | "center" | "right";
-
-function genTableAdvanced(
-  headers: any[],
-  arrays: any[][],
-  alignments?: Alignment[]
-): string {
-  const maxLength = Math.max(...arrays.map(arr => arr.length));
-  const transposed: any[][] = [];
-
-  for (let i = 0; i < maxLength; i++) {
-    transposed[i] = arrays.map(col => (col[i] !== undefined ? col[i] : ""));
-  }
-
-  const alignmentChars = {
-    left: ":--",
-    center: ":-:",
-    right: "--:",
-  };
-
-  let markdown = "";
-
-  if (transposed.length > 0) {
-    // Header row
-    markdown += `| ${headers.join(" | ")} |\n`;
-
-    // Separator row with alignment
-    const defaultAlign = alignments || Array(arrays.length).fill("center");
-    const separators = defaultAlign.map(
-      (align: Alignment) => alignmentChars[align]
-    );
-    markdown += `| ${separators.join(" | ")} |\n`;
-
-    // Data rows
-    for (let i = 0; i < transposed.length; i++) {
-      markdown += `| ${transposed[i].join(" | ")} |\n`;
-    }
-  }
-
-  return markdown.trim();
-}
-
 function generateHeadersMulti(terms: number, outputLabels: string[]): string[] {
   const headers: string[] = [];
 
@@ -143,54 +113,90 @@ function generateHeadersMulti(terms: number, outputLabels: string[]): string[] {
     : [...headers, ...outputLabels];
 }
 
-function generateLogicTable(
+function normalizeAlignments(
+  terms: number,
+  alignments?: Alignment | Alignment[]
+): Alignment[] {
+  if (typeof alignments === "string") {
+    return [alignments, alignments, alignments];
+  }
+
+  if (Array.isArray(alignments)) {
+    if (alignments.length < terms) {
+      const validAlign = alignments.find(x => x !== undefined) ?? "l";
+      for (let i = 0; i < terms; i++) {
+        if (!alignments[i]) alignments.push(validAlign);
+      }
+    }
+    return alignments;
+  }
+
+  return ["", "", ""] as Alignment[];
+}
+
+/* ---------------- Main functions ---------------- */
+
+function generateTruthTable<const H extends readonly string[]>(
   fn: LogicFn,
   terms: number,
   outputLabel = "F",
-  alignments?: Alignment[]
-): string {
+  alignments?: Alignment | Alignment[]
+): TruthTableResult<H> {
   const columns = generateTruthTableColumns(fn, terms);
-  const headers = generateHeaders(terms, outputLabel);
+  const headers = generateHeaders(terms, outputLabel) as unknown as H;
 
-  return genTableAdvanced(headers, columns, alignments);
+  return {
+    headers,
+    columns: columns as any,
+    alignments: normalizeAlignments(terms + 1, alignments),
+  };
 }
 
-function generateLogicTableMulti(
+function generateTruthTableMulti<const H extends readonly string[]>(
   fn: MultiLogicFn,
   terms: number,
   outputLabels: string[],
   alignments?: Alignment[]
-): string {
+): TruthTableResult<H> {
   const columns = generateTruthTableColumnsMulti(fn, terms);
-  const headers = generateHeadersMulti(terms, outputLabels);
+  const headers = generateHeadersMulti(terms, outputLabels) as unknown as H;
 
-  return genTableAdvanced(headers, columns, alignments);
+  return {
+    headers,
+    columns: columns as any,
+    alignments: normalizeAlignments(terms + outputLabels.length, alignments),
+  };
 }
 
-const res = generateLogicTableMulti(
-  (control, a0, a1, b0, b1) => {
-    // First half
-    const xor1 = xor(b0, control);
-    const xor2 = xor(a0, xor1);
-    const and1 = and(a0, xor1);
-    const and2 = and(control, xor2);
+function toMarkdown<H extends readonly string[]>(table: TruthTableResult<H>) {
+  // Convert column-major -> row-major
+  const rows = table.columns[0].map((_, r) =>
+    table.columns.map(col => formatCell(col[r]))
+  );
 
-    const sum1 = xor(xor(control, xor2));
-    const carry0 = or(and1, and2);
+  const allRows = [table.headers.map(h => String(h)), ...rows];
 
-    // Second half
-    const xor3 = xor(b1, control);
-    const xor4 = xor(a1, xor3);
-    const and3 = and(a1, xor3);
-    const and4 = and(carry0, xor4);
+  return markdownTable(allRows, { align: table.alignments });
+}
 
-    const sum2 = xor(carry0, xor4);
-    const carry1 = or(and3, and4);
+const xorTable = generateTruthTable(nand, 2, "$\\overline{A \\cdot B}$", "c");
 
-    return [sum1, sum2, carry1];
-  },
-  5,
-  ["control", "a0", "a1", "b0", "b1", "sum1", "sum2", "carry"]
-);
+console.log(toMarkdown(xorTable));
 
-console.log(res);
+export {
+  generateBinaryCases,
+  generateTruthTableColumns,
+  formatCell,
+  generateTruthTableColumnsMulti,
+  generateHeaders,
+  generateHeadersMulti,
+  generateTruthTable,
+  generateTruthTableMulti,
+  and,
+  or,
+  not,
+  nand,
+  nor,
+  xor,
+  xnor,
+};

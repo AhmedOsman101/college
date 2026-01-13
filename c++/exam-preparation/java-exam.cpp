@@ -74,7 +74,7 @@ class Invoice {
  public:
   int id;
   vector<Product> items = {};
-  double totalPrice;
+  double totalPrice = 0;
   string fileName;
 
   Invoice() {
@@ -136,6 +136,12 @@ void invoice() {
 
       items.push_back(item - '1'); // subtract the ascii value
     }
+
+    cout << "You selected: ";
+
+    for (int idx : items) cout << PRODUCTS[idx].name << " ";
+
+    cout << endl;
 
     Invoice currentInvoice;
 

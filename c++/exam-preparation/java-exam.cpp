@@ -2,6 +2,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <filesystem>
+#include <cstdlib>
 
 using namespace std;
 
@@ -28,6 +30,7 @@ void pattern() {
 const string OUTPUT_DIR = "/home/othman/work/college/c++/exam-preparation/invoices";
 
 struct Product {
+  int id;
   string name;
   double price;
 };
@@ -36,14 +39,35 @@ const int NUM_PRODUCTS = 3;
 
 // Create an array of Product objects
 Product PRODUCTS[NUM_PRODUCTS] = {
-  {"keyboard", 50.0},
-  {"mouse", 30.0},
-  {"scanner", 100.0}
+  {0, "keyboard", 50.0},
+  {1, "mouse", 30.0},
+  {2, "scanner", 100.0}
 };
 
 int generateId() {
-  static int id = 1;
-  return ++id;
+  int id = 0;
+  string countFilePath = OUTPUT_DIR + "/count.txt";
+  ifstream inFile(countFilePath);
+
+  if (inFile) {
+    inFile >> id;
+    inFile.close();
+  }
+
+  if (id <= 0) id = 1;
+  else id++;
+
+  ofstream outFile(countFilePath, ios::trunc);
+
+  if (!outFile) {
+    cerr << "Failed to open file for writing: " << countFilePath << endl;
+    exit(1);
+  }
+
+  outFile << id << endl;
+  outFile.close();
+
+  return id;
 }
 
 class Invoice {
@@ -55,12 +79,32 @@ class Invoice {
 
   Invoice() {
     id = generateId();
-    fileName = to_string(id) + "-invoice.txt";
+    fileName = OUTPUT_DIR + "/" + to_string(id) + "-invoice.txt";
   }
 
   void addItem(const Product& p) {
     items.push_back(p);
     totalPrice += p.price;
+  }
+  void saveToFile() const {
+    ofstream outFile(fileName);
+
+    if (!outFile) {
+      cerr << "Failed to open file " << fileName << endl;
+      exit(1);
+    }
+
+    outFile << id << "\n";
+    outFile << totalPrice << "\n";
+
+    for (size_t i = 0; i < items.size(); i++) {
+      outFile << items[i].id;
+
+      if (i != items.size() - 1) outFile << ",";
+    }
+
+    outFile.close();
+    cout << "Invoice saved to " << fileName << "\n";
   }
 };
 
@@ -73,10 +117,12 @@ void invoice() {
     cout << message;
     getline(cin, option);
 
-    if (option != "p" && option != "exit") {
-      cout << "Invalid option: " << option << "\n" << message;
+    if (option == "exit") break;
+
+    if (option != "p") {
+      cout << "Invalid option: " << option << "\n";
       continue;
-    } else if (option == "exit") break;
+    }
 
     for (int i = 0; i < NUM_PRODUCTS; i++) {
       cout << i + 1 << ": " << PRODUCTS[i].name << " (" << PRODUCTS[i].price << ")" << "\n";
@@ -94,12 +140,15 @@ void invoice() {
     Invoice currentInvoice;
 
     for (auto item : items) currentInvoice.addItem(PRODUCTS[item]);
+
+    currentInvoice.saveToFile();
   }
 
   cout << "Goodbye!" << endl;
 }
 
 int main() {
+  filesystem::create_directories(OUTPUT_DIR);
   invoice();
 
   return 0;

@@ -47,7 +47,7 @@ class Task4 {
       if (number % i == 0) stdout.printf("%d ", i);
     }
 
-    stdout.println();
+    stdout.println("Are the factors of " + number);
   }
 
   public static void task5() {
@@ -129,7 +129,7 @@ class Task4 {
 
         if (maybeNumber < 0) negatives++;
       } catch (NumberFormatException e) {
-        stderr.printf("%s: %s\n", e.getMessage(), answer);
+        stderr.printf("An error occurred %s\n", e.getMessage());
       }
     }
 
@@ -188,10 +188,10 @@ class Task4 {
     int score = 0;
 
     while (score < 5) {
-      int secret = (int) Math.ceil(Math.random() * 10);
+      int secret = (int) Math.ceil(Math.random() * 5);
 
       while (true) {
-        stdout.print("Guess the number (1-10): ");
+        stdout.print("Guess the number (1-5): ");
         int guess = stdin.nextInt();
 
         if (guess == secret) {
@@ -223,9 +223,9 @@ class Task4 {
   public static void task12() {
     stdout.print("Enter a number: ");
     int n = stdin.nextInt();
-    long[] memo = new long[n];
+    long[] memo = new long[n + 1];
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 0; i <= n; i++) {
       long res = fib(i, memo);
       stdout.printf("%d ", res);
     }
@@ -288,7 +288,7 @@ class Task4 {
   }
 
   public static void task15() {
-    stdout.print("Enter a number: ");
+    stdout.print("Enter a string to reverse: ");
     String str = stdin.nextLine().trim();
     int len = str.length();
     char[] reversed = new char[len];
@@ -321,21 +321,54 @@ class Task4 {
   }
 
   public static void main(String[] args) {
+    stdout.println("--- Running task1 ---\n");
     task1();
+
+    stdout.println("--- Running task2 ---\n");
     task2();
+
+    stdout.println("--- Running task3 ---\n");
     task3();
+
+    stdout.println("--- Running task4 ---\n");
     task4();
+
+    stdout.println("--- Running task5 ---\n");
     task5();
+
+    stdout.println("--- Running task6 ---\n");
     task6();
+
+    stdout.println("--- Running task7 ---\n");
     task7();
+
+    stdin.nextLine();
+    stdout.println("--- Running task8 ---\n");
     task8();
+
+    stdout.println("--- Running task9 ---\n");
     task9();
+
+    stdout.println("--- Running task10 ---\n");
     task10();
+
+    stdout.println("--- Running task11 ---\n");
     task11();
+
+    stdout.println("--- Running task12 ---\n");
     task12();
+
+    stdout.println("--- Running task13 ---\n");
     task13();
+
+    stdout.println("--- Running task14 ---\n");
     task14();
+
+    stdin.nextLine();
+    stdout.println("--- Running task15 ---\n");
     task15();
+
+    stdout.println("--- Running task16 ---\n");
     task16();
 
     stdin.close();

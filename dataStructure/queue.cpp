@@ -13,7 +13,7 @@ class Queue {
     delete [] items;
   }
 
-  void push(T item) {
+  void enqueue(T item) {
     if (isFull()) cerr << "Queue is full!\n";
     else {
       rear++;
@@ -21,7 +21,7 @@ class Queue {
     }
   }
 
-  void pop() {
+  void dequeue() {
     if (isEmpty()) cerr << "Queue is empty!\n";
     else {
       // shift the whole array.
@@ -68,12 +68,12 @@ class Queue {
 int main() {
   Queue arr = Queue<int>(5);
 
-  arr.push(1);
-  arr.push(2);
-  arr.push(3);
+  arr.enqueue(1);
+  arr.enqueue(2);
+  arr.enqueue(3);
   arr.display();
-  arr.pop();
-  arr.push(4);
+  arr.dequeue();
+  arr.enqueue(4);
   arr.display();
   printf("%d\n", arr.front());
 

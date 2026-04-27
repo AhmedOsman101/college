@@ -2,18 +2,19 @@
 
 using namespace std;
 
+template <typename T>
 class Array {
  public:
   // constructor
-  Array(int len) : length(len), size(-1) {
-    items = new int[length];
+  Array(unsigned int len) : length(len), size(-1) {
+    items = new T[length];
   };
   // destructor
   ~Array() {
     delete [] items;
   }
 
-  void push(int item) {
+  void push(T item) {
     if (isFull()) cerr << "Array is full!\n";
     else {
       size++;
@@ -29,14 +30,20 @@ class Array {
 
   void display() {
     printf("[");
-    for (int i = 0; i <= size; i++) printf(" %d", items[i]);
+    for (int i = 0; i <= size; i++) cout << ' ' << items[i];
     printf(" ]\n");
   }
 
+  /*
+    * returns how many items are actually stored in the array.
+   */
   int getSize() {
-    return size;
+    return size + 1;
   }
-  int getLength() {
+  /*
+    * returns how many items can be stored in the array.
+   */
+  unsigned int getLength() {
     return length;
   }
 
@@ -49,13 +56,13 @@ class Array {
   }
 
  private:
-  int length; // How many items can we store
+  unsigned int length; // How many items can we store
   int size;   // Index of the last stored item
-  int *items;
+  T *items;
 };
 
 int main() {
-  Array arr = Array(5);
+  Array arr = Array<int>(5);
 
   arr.push(1);
   arr.push(2);

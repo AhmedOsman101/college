@@ -14,6 +14,15 @@ class SingleLinkedList {
   Node<T> *head;
  public:
   SingleLinkedList() : head(nullptr) {}
+  ~SingleLinkedList() {
+    Node<T> *current = head;
+
+    while (current != nullptr) {
+      Node<T> *next = current->next;
+      delete current;
+      current = next;
+    }
+  }
 
   bool isEmpty() {
     return head == nullptr;
@@ -62,7 +71,7 @@ class SingleLinkedList {
   }
 
   void insertBefore(T item, T value) {
-    if (isEmpty() || !search(item)) return;
+    if (isEmpty()) return;
 
     if (head->data == item) {
       Node<T> *newNode = new Node<T> {value, head};
@@ -77,11 +86,11 @@ class SingleLinkedList {
       current = prev->next;
     }
 
-    prev->next = new Node<T> {value, current};
+    if (current != nullptr) prev->next = new Node<T> {value, current};
   }
 
   void deleteValue(T value) {
-    if (isEmpty() || !search(value)) return;
+    if (isEmpty()) return;
 
     if (head->data == value) {
       Node<T> *temp = head;
@@ -97,8 +106,10 @@ class SingleLinkedList {
       current = prev->next;
     }
 
-    if (current->next == nullptr) prev->next = nullptr;
-    else prev->next = current->next;
+    if (current != nullptr) {
+      prev->next = current->next;
+      delete current;
+    }
   }
 };
 

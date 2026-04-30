@@ -58,13 +58,3 @@ class Array<T> {
   }
 }
 
-// int main() {
-//   Array arr = Array<int>(5);
-
-//   arr.push(1);
-//   arr.push(2);
-//   arr.push(3);
-//   arr.display();
-
-//   return 0;
-// }

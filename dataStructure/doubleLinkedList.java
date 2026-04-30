@@ -106,6 +106,7 @@ class DoubleLinkedList<T> {
       prev.next = newDNode;
       current.prev = newDNode;
     }
+    else stderr.println("Item not found!");
   }
 
   public void deleteValue(T value) {
@@ -128,5 +129,6 @@ class DoubleLinkedList<T> {
       prev.next = current.next;
       if (current.next != null) current.next.prev = prev;
     }
+    else stderr.println("Value not found!");
   }
 }

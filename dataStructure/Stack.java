@@ -32,8 +32,8 @@ class Stack<T> {
     return this.topIdx + 1;
   }
 
-  public T top() {
-    if (this.isEmpty()) stderr.println("Stack is empty!");
+  public T top() throws Error {
+    if (this.isEmpty()) throw new Error("Stack is empty!");
     return this.items[this.topIdx];
   }
 

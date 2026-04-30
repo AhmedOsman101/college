@@ -80,6 +80,7 @@ class SingleLinkedList<T> {
     }
 
     if (current != null) prev.next = new Node<>(value, current);
+    else stderr.println("Item not found!");
   }
 
   public void deleteValue(T value) {
@@ -100,5 +101,6 @@ class SingleLinkedList<T> {
     if (current != null) {
       prev.next = current.next;
     }
+    else stderr.println("Value not found!");
   }
 }

@@ -87,6 +87,7 @@ class SingleLinkedList {
     }
 
     if (current != nullptr) prev->next = new Node<T> {value, current};
+    else cerr << "Item not found!\n";
   }
 
   void deleteValue(T value) {
@@ -110,6 +111,7 @@ class SingleLinkedList {
       prev->next = current->next;
       delete current;
     }
+    else cerr << "Value not found!\n";
   }
 };
 

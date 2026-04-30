@@ -107,6 +107,7 @@ class DoubleLinkedList {
       prev->next = newDNode;
       current->prev = newDNode;
     }
+    else cerr << "Item not found!\n";
   }
 
   void deleteValue(T value) {
@@ -132,6 +133,7 @@ class DoubleLinkedList {
       if (current->next != nullptr) current->next->prev = prev;
       delete current;
     }
+    else cerr << "Value not found!\n";
   }
 };
 

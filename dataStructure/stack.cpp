@@ -31,7 +31,10 @@ class Stack {
   }
 
   T top() {
-    if (isEmpty()) cerr << "Stack is empty!\n";
+    if (isEmpty()) {
+      cerr << "Stack is empty!\n";
+      return T();
+    }
     return items[topIdx];
   }
 

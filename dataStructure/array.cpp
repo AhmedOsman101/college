@@ -22,10 +22,13 @@ class Array {
     }
   }
 
-  void pop() {
+  T pop() {
     // NOTE: The item isn't really removed, it will be overwritten in the next push.
-    if (isEmpty()) cerr << "Array is empty!\n";
-    else size--;
+    if (isEmpty()) {
+      cerr << "Array is empty!\n";
+      return T();
+    }
+    return items[size--];
   }
 
   void display() {

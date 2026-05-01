@@ -34,8 +34,8 @@ public class Main {
     stdout.print("After pushing 1,2,3: ");
     arr.display();
 
-    stdout.println("Size: " + arr.getSize());
-    stdout.println("Length: " + arr.getLength());
+    stdout.println("Size: " + arr.size());
+    stdout.println("Length: " + arr.length());
 
     try {
       stdout.println("Popped: " + arr.pop());

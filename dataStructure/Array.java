@@ -13,7 +13,6 @@ class Array<T> {
     this.items = (T[]) new Object[length];
     this.length = length;
     this.size = -1;
-
   }
 
   public void push(T item) {
@@ -39,13 +38,13 @@ class Array<T> {
   /*
     * returns how many items are actually stored in the array.
    */
-  public int getSize() {
+  public int size() {
     return this.size + 1;
   }
   /*
     * returns how many items can be stored in the array.
    */
-  public int getLength() {
+  public int length() {
     return this.length;
   }
 
@@ -57,4 +56,3 @@ class Array<T> {
     return this.size == this.length - 1;
   }
 }
-

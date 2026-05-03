@@ -9,7 +9,7 @@ class Queue<T> {
   static final PrintStream stdout = System.out;
   static final PrintStream stderr = System.err;
 
-
+  @SuppressWarnings("unchecked")
   public Queue(int length) {
     this.length = length;
     this.rear = -1;

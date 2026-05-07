@@ -2,10 +2,10 @@
 /**
  * Migration: Create Users Table
  */
-require_once __DIR__ . '/../config/database.php';
 
-try {
-  $sql = <<<SQL
+function createUsersTable(mysqli $conn, bool $showOutput = true) {
+  try {
+    $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -16,11 +16,19 @@ CREATE TABLE IF NOT EXISTS users (
   )
 SQL;
 
-  if ($conn->query($sql) === true) {
-    echo "Users table created successfully!<br>";
-  } else {
-    echo "Error creating table: $conn->error";
+    if ($conn->query($sql) === true) {
+      if ($showOutput) {
+        echo "Users table created successfully!<br>";
+      }
+    } else {
+      throw new Exception("Error creating table: $conn->error");
+    }
+  } catch (Exception $e) {
+    if ($showOutput) {
+      echo "Error: " . $e->getMessage();
+      return;
+    }
+
+    throw $e;
   }
-} catch (Exception $e) {
-  echo "Error: " . $e->getMessage();
 }

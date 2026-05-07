@@ -1,17 +1,31 @@
 ---
 marp: true
 theme: default
+class: invert
 paginate: true
 size: 16:9
 ---
 
-# Educational Product Manager
+# Product Manager
 
 PHP + MySQL web app
 
-Register, login, manage products
+Register, login, and manage products
 
 ---
+
+# Team members
+
+| الإسم      | الإسم               |
+| ---------- | ------------------- |
+| ياسين محمد | أحمد علي أحمد عثمان |
+| محمد عادل  | محمد وليد           |
+| محمد هرمس  | ادم احمد شوقي       |
+| مصطفى خالد | مروان               |
+| بسملة مجدي | إيناس عبد القادر    |
+
+---
+
 
 # What It Does
 
@@ -53,6 +67,12 @@ Logout
 
 ---
 
+# Register Feedback
+
+![w:950](Register-fail.png)
+
+---
+
 # Register Result
 
 ![w:950](Register-success.png)
@@ -83,13 +103,25 @@ Logout
 
 ---
 
+# Edit Product
+
+![w:950](edit-product-start.png)
+
+---
+
+# Edit Result
+
+![w:950](edit-product-success.png)
+
+---
+
 # Main Pages
 
-- Login
-- Register
-- Product list
-- Add product
-- Edit product
+- Login: sign in to access the dashboard
+- Register: create a new account
+- Product list: browse products and actions
+- Add product: create a new item with image
+- Edit product: update product details and image
 
 ---
 
@@ -147,15 +179,9 @@ Session starts the protected area
 
 # Product List View
 
-```html
-<th>Image</th>
-<th>Name</th>
-<th>Price</th>
-<th>Stock</th>
-<th>Actions</th>
-```
-
-The dashboard focuses on key product info
+- Shows image, name, price, and stock
+- Each row has edit and delete actions
+- This is the main dashboard after login
 
 ---
 
@@ -180,7 +206,10 @@ Delete without full page refresh
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 ```
 
-Passwords are stored hashed
+- Passwords are not saved as plain text
+- Login verifies the hash securely
+- Registration also checks for duplicate emails
+- Basic validation stops empty form submission
 
 ---
 
@@ -223,13 +252,13 @@ Basic schema for the user profiles
 
 # Backend Structure
 
-- `index.php`
-- `routes.php`
-- `controllers/LogicController.php`
-- `modles/User.php`
-- `models/Product.php`
-- `config/database.php`
-- `migrations/*`
+- `index.php`: main entry point for every request
+- `routes.php`: maps URL actions to pages and logic
+- `controllers/LogicController.php`: handles auth and product actions
+- `models/User.php`: user registration and lookup
+- `models/Product.php`: product CRUD operations
+- `config/database.php`: connects to MySQL and auto-runs setup
+- `migrations/*`: creates the required database tables
 
 ---
 

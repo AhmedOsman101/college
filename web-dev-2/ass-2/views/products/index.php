@@ -85,7 +85,7 @@
       if (confirm('Are you sure you want to delete this product using AJAX?')) {
         // Fetch is the modern way to do AJAX in Vanilla JavaScript
         fetch('index.php?action=delete_product&id=' + id, {
-          method: 'GET',
+          method: 'DELETE',
           headers: {
             'X-Requested-With': 'XMLHttpRequest' // Tell PHP this is an AJAX request
           }

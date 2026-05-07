@@ -162,10 +162,12 @@ The dashboard focuses on key product info
 # AJAX Delete
 
 ```js
-fetch('index.php?action=delete_product&id=' + id, {
-  method: 'GET',
-  headers: { 'X-Requested-With': 'XMLHttpRequest' }
-})
+fetch(`index.php?action=delete_product&id=${id}`, {
+  method: "DELETE",
+  headers: {
+    "X-Requested-With": "XMLHttpRequest",
+  },
+});
 ```
 
 Delete without full page refresh
@@ -184,12 +186,17 @@ Passwords are stored hashed
 
 # Database Design
 
+## Products Table
+
 ```sql
 CREATE TABLE products (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   image VARCHAR(255),
   name VARCHAR(100) NOT NULL,
+  description TEXT,
   price DECIMAL(10, 2) NOT NULL,
-  stock INT NOT NULL
+  stock INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ```
 
@@ -197,15 +204,32 @@ Simple schema for product management
 
 ---
 
+## Users Table
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  birthdate DATE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+```
+
+Basic schema for the user profiles
+
+---
+
 # Backend Structure
 
 - `index.php`
 - `routes.php`
-- `LogicController.php`
-- `User.php`
-- `Product.php`
+- `controllers/LogicController.php`
+- `modles/User.php`
+- `models/Product.php`
 - `config/database.php`
-- `migrations/`
+- `migrations/*`
 
 ---
 

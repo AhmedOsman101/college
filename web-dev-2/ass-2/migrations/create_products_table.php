@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
-    sold_quantity INT DEFAULT 0,
-    sold_amount DECIMAL(15, 2) DEFAULT 0.00,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )
 SQL;

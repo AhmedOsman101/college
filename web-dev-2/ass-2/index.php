@@ -13,13 +13,12 @@ $controller = new LogicController($conn);
 
 // Start the session to handle flash messages and authentication
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 // Simple Router
 // We use the 'action' parameter in the URL to determine what the user wants to do.
 // Example: index.php?action=products
-$action = isset($_GET['action']) ? $_GET['action'] : 'login';
+$action = $_GET['action'] ?? 'login';
 
 require_once 'routes.php';
-?>

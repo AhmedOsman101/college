@@ -14,15 +14,14 @@ $conn = new mysqli($host, $username, $password);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 
 // Create database if it doesn't exist
 $sql = "CREATE DATABASE IF NOT EXISTS `$db_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
-if ($conn->query($sql) === TRUE) {
-    // Select the database
-    $conn->select_db($db_name);
+if ($conn->query($sql) === true) {
+  // Select the database
+  $conn->select_db($db_name);
 } else {
-    die("Error creating database: " . $conn->error);
+  die("Error creating database: " . $conn->error);
 }
-?>

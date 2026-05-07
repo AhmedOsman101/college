@@ -12,4 +12,3 @@ require_once 'migrations/create_products_table.php';
 
 echo "<h3>Migrations finished successfully!</h3>";
 echo "<a href='index.php'>Go to Login Page</a>";
-?>

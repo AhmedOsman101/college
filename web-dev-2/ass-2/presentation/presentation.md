@@ -6,6 +6,15 @@ paginate: true
 size: 16:9
 ---
 
+<style>
+section img {
+  display: block;
+  margin: 0 auto;
+  object-fit: scale-down;
+  aspect-ratio: 16/9
+}
+</style>
+
 # Product Manager
 
 PHP + MySQL web app
@@ -48,79 +57,100 @@ Logout
 
 ---
 
+# Home Page
+
+![w:1000](home-page.png)
+
+---
+
+# About Page
+
+![w:1000](about-page.png)
+
+---
+
+# Footer
+
+![w:1000](footer.png)
+
+---
+
 # Login
 
-![w:950](login-empty.png)
+![w:1000](login-empty.png)
 
 ---
 
 # Login Feedback
 
-![w:950](login-fail.png)
+![w:1000](login-fail.png)
 
 ---
 
 # Login Result
 
-![w:950](Register-success.png)
+![w:1000](login-success.png)
 
 ---
 
 # Register
 
-![w:950](Register-empty.png)
+![w:1000](Register-empty.png)
 
 ---
 
 # Register Feedback
 
-![w:950](Register-fail.png)
+![w:1000](Register-fail.png)
 
 ---
 
 # Products Dashboard
 
-![w:1050](Products-full.png)
+![w:1000](Products-full.png)
 
 ---
 
 # Empty State
 
-![w:1050](Products-empty.png)
+![w:1000](Products-empty.png)
 
 ---
 
 # Add Product
 
-![w:1050](add-product-full.png)
+![w:1000](add-product-full.png)
 
 ---
 
 # Product Added
 
-![w:1050](add-product-success.png)
+![w:1000](add-product-success.png)
 
 ---
 
 # Edit Product
 
-![w:1050](edit-product-start.png)
+![w:1000](edit-product-start.png)
 
 ---
 
 # Edit Result
 
-![w:1050](edit-product-success.png)
+![w:1000](edit-product-success.png)
 
 ---
 
 # Main Pages
 
+- Home page: landing page for the website
 - Login: sign in to access the dashboard
 - Register: create a new account
 - Product list: browse products and actions
 - Add product: create a new item with image
 - Edit product: update product details and image
+- About page: introduces the project and team
+- Footer: shared footer section across pages
 
 ---
 

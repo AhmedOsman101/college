@@ -14,7 +14,7 @@ $currentRole = $_SESSION['role'] ?? '';
   <?php
   // Calculate base URL so all relative paths work regardless of entry point
   $scriptPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-  $projectFolder = '/webassignment2/web_assignment2';
+  $projectFolder = PHP_OS_FAMILY === 'Linux' ? '' : '/webassignment2/web_assignment2';
 
 
   $baseHref = "$scriptPath/";

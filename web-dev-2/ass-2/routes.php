@@ -45,7 +45,7 @@ switch ($action) {
 
   case 'edit_product':
     $controller->checkAuth();
-    $id = $_GET['id'];
+    $id = $_REQUEST['id'] ?? null;
     $productModel = new Product($conn);
     $product = $productModel->getById($id);
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -61,7 +61,16 @@ switch ($action) {
     $controller->deleteProduct($id);
     break;
 
+  // --- ElderCare Public Pages ---
+  case 'home':
+    require_once 'views/home.php';
+    break;
+
+  case 'about':
+    require_once 'views/about.php';
+    break;
+
   default:
-    echo "404 - Page Not Found";
+    require_once 'views/home.php';
     break;
 }

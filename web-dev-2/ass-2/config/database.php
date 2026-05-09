@@ -4,13 +4,14 @@
  * This file handles the connection to the MySQL database.
  */
 
-$host = 'localhost';
+$host = '127.0.0.1';
 $db_name = 'web_assignment_db';
-$username = 'root'; // Default XAMPP username
-$password = '';     // Default XAMPP password
+$username = 'root';
+$password = PHP_OS_FAMILY === "Dariwn" ? 'root' : '';
+$port = PHP_OS_FAMILY === "Dariwn" ? 8889 : 3306; // SQL port
 
 // Create connection
-$conn = new mysqli($host, $username, $password);
+$conn = new mysqli($host, $username, $password, null, $port);
 
 // Check connection
 if ($conn->connect_error) {
@@ -22,5 +23,5 @@ $checkDatabaseSql = "SHOW DATABASES LIKE '$db_name';";
 $databaseCheckResult = $conn->query($checkDatabaseSql);
 $databaseExists = $databaseCheckResult->num_rows > 0;
 
-require_once __DIR__ . '../run_migrations.php';
+require_once __DIR__ . '/../run_migrations.php';
 runMigrations();

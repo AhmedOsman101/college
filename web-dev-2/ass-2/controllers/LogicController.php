@@ -62,6 +62,7 @@ class LogicController {
       if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
+        $_SESSION['role'] = 'admin'; // Set to admin for demonstration purposes
         header("Location: index.php?action=products");
         exit();
       } else {

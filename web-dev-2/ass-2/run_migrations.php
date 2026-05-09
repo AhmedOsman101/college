@@ -36,7 +36,7 @@ function runMigrations() {
     require_once __DIR__ . '/migrations/create_users_table.php';
     require_once __DIR__ . '/migrations/create_products_table.php';
 
-    createUsersTable($conn, $showOutput);
-    createProductsTable($conn, $showOutput);
+    createUsersTable($conn);
+    createProductsTable($conn);
   }
 }

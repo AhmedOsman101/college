@@ -75,11 +75,9 @@ $currentRole = $_SESSION['role'] ?? '';
             <?php endif; ?>
           </a>
         <?php endif; ?>
-        <a href="index.php?action=profile"
-          style="text-decoration: none; font-weight: 700; color: var(--primary); margin-right: 1rem; transition: color 0.2s;"
-          onmouseover="this.style.color='var(--secondary)'" onmouseout="this.style.color='var(--primary)'">
+        <p style="font-weight: 700; color: var(--secondary); margin-right: 1rem;">
           Hello, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'User'); ?>
-        </a>
+        </p>
         <a href="index.php?action=logout" class="btn-signup"
           style="background: #ef4444; padding: 0.6rem 1.2rem; font-size: 0.9rem;">Logout</a>
       <?php else: ?>

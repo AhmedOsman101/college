@@ -16,7 +16,6 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-// Simple Router
 // We use the 'action' parameter in the URL to determine what the user wants to do.
 // Example: index.php?action=products
 $action = $_GET['action'] ?? 'login';

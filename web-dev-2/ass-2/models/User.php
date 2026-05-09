@@ -4,7 +4,7 @@
  * Handles all database operations related to the users table.
  */
 class User {
-  private $db;
+  private mysqli $db;
 
   public function __construct($conn) {
     $this->db = $conn;

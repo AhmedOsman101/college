@@ -57,7 +57,7 @@ include 'views/partials/header.php';
           <div
             style="height: 200px; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border);">
             <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($row['name']) ?>"
-              style="width: 100%; height: 100%; object-fit: cover;">
+              style="width: 100%; height: 100%; object-fit: scale-down;">
           </div>
 
           <div style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column;">

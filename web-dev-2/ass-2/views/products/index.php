@@ -52,7 +52,7 @@ include 'views/partials/header.php';
       foreach ($products as $row):
         $imgPath = (!empty($row['image']) && $row['image'] !== 'default.png') ? 'uploads/' . $row['image'] : 'assets/img/default.png';
         ?>
-        <div class="auth-card fade-up"
+        <div class="auth-card fade-up" id="product-card-<?= $row['id'] ?>"
           style="margin-top: 0; padding: 0; overflow: hidden; border-radius: 1.5rem; display: flex; flex-direction: column;">
           <div
             style="height: 200px; background: white; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border);">
@@ -83,9 +83,9 @@ include 'views/partials/header.php';
                 <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                   <a href="index.php?action=edit_product&id=<?= $row['id'] ?>" class="btn-signup"
                     style="flex: 1; text-align: center; padding: 0.6rem; font-size: 0.8rem; background: var(--secondary); box-shadow: none;">Edit</a>
-                  <a href="index.php?action=delete_product&id=<?= $row['id'] ?>" class="btn-signup"
-                    style="flex: 1; text-align: center; padding: 0.6rem; font-size: 0.8rem; background: white; border: 1px solid #fee2e2; color: #ef4444; box-shadow: none;"
-                    onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                  <button type="button" class="btn-signup"
+                    style="flex: 1; text-align: center; padding: 0.6rem; font-size: 0.8rem; background: white; border: 1px solid #fee2e2; color: #ef4444; box-shadow: none; cursor: pointer;"
+                    onclick="deleteProduct(<?= $row['id'] ?>)">Delete</button>
                 </div>
               <?php endif; ?>
             </div>
@@ -112,5 +112,29 @@ include 'views/partials/header.php';
     <?php endif; ?>
   </div>
 </div>
+
+<script>
+  function deleteProduct(id) {
+    if (!confirm('Are you sure you want to delete this product?')) {
+      return;
+    }
+
+    fetch(`index.php?action=delete_product&id=${id}`, {
+      method: "DELETE",
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const card = document.getElementById(`product-card-${id}`);
+          if (card) {
+            card.remove();
+          }
+        }
+      });
+  }
+</script>
 
 <?php include 'views/partials/footer.php'; ?>

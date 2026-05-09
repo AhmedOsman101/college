@@ -241,7 +241,13 @@ fetch(`index.php?action=delete_product&id=${id}`, {
   headers: {
     "X-Requested-With": "XMLHttpRequest",
   },
-});
+})
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById(`product-card-${id}`)?.remove();
+    }
+  });
 ```
 
 Delete without full page refresh

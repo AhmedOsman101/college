@@ -16,16 +16,15 @@ Register, login, and manage products
 
 # Team members
 
-| الإسم      | الإسم               |
-| ---------- | ------------------- |
-| ياسين محمد | أحمد علي أحمد عثمان |
-| محمد عادل  | محمد وليد           |
-| محمد هرمس  | ادم احمد شوقي       |
-| مصطفى خالد | مروان               |
-| بسملة مجدي | إيناس عبد القادر    |
+| الإسم           | الإسم               |
+| --------------- | ------------------- |
+| ياسين محمد رشاد | أحمد علي أحمد عثمان |
+| محمد عادل       | محمد وليد           |
+| محمد هرمس       | ادم احمد شوقي       |
+| مصطفى خالد      | مروان               |
+| بسملة مجدي      | إيناس عبد القادر    |
 
 ---
-
 
 # What It Does
 
@@ -61,6 +60,12 @@ Logout
 
 ---
 
+# Login Result
+
+![w:950](Register-success.png)
+
+---
+
 # Register
 
 ![w:950](Register-empty.png)
@@ -70,12 +75,6 @@ Logout
 # Register Feedback
 
 ![w:950](Register-fail.png)
-
----
-
-# Register Result
-
-![w:950](Register-success.png)
 
 ---
 
@@ -93,25 +92,25 @@ Logout
 
 # Add Product
 
-![w:950](add-product-empty.png)
+![w:1050](add-product-full.png)
 
 ---
 
 # Product Added
 
-![w:950](add-product-success.png)
+![w:1050](add-product-success.png)
 
 ---
 
 # Edit Product
 
-![w:950](edit-product-start.png)
+![w:1050](edit-product-start.png)
 
 ---
 
 # Edit Result
 
-![w:950](edit-product-success.png)
+![w:1050](edit-product-success.png)
 
 ---
 
@@ -128,16 +127,22 @@ Logout
 # App Entry
 
 ```php
+// Include the database connection and the controller
 require_once 'config/database.php';
 require_once 'controllers/LogicController.php';
 
+// Initialize the controller
 $controller = new LogicController($conn);
 
+// Start the session to handle flash messages and authentication
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+// We use the 'action' parameter in the URL to determine what the user wants to do.
+// Example: index.php?action=products
 $action = $_GET['action'] ?? 'login';
+
 require_once 'routes.php';
 ```
 
@@ -151,10 +156,13 @@ One entry point for the whole app
 switch ($action) {
   case 'login': ...
   case 'register': ...
+  case 'logout': ...
   case 'products': ...
   case 'create_product': ...
   case 'edit_product': ...
   case 'delete_product': ...
+  case 'home': ...
+  case 'about': ...
   default: ...
 }
 ```
@@ -163,13 +171,23 @@ Simple page-based navigation
 
 ---
 
-# Login Success
+# Login Process
 
 ```php
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+$user = $this->userModel->findByEmail($email);
+
 if ($user && password_verify($password, $user['password'])) {
   $_SESSION['user_id'] = $user['id'];
   $_SESSION['user_name'] = $user['name'];
   header("Location: index.php?action=products");
+  exit();
+} else {
+  $_SESSION['error'] = "Invalid email or password.";
+  header("Location: index.php?action=login");
+  exit();
 }
 ```
 

@@ -1,0 +1,7 @@
+(4) Using the implemented code in "db_connection.php” script,
+ereate a new PHP file to connect to "practice” database. Save
+‘your seript to "index.php" file
+
+Your Answer
+
+142

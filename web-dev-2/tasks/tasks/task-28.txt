@@ -1,0 +1,17 @@
+W Function Refuming Values
+
+(1) Write PHP fonction that takes fwo arguments $aun! and Smum? and
+returns the sum of the fivo arguments o the user screen, then cal this
+function and print the refurn value to the user screen.
+
+Your Answer
+
+2) PHP Amays
+W Indexed amays
+
+(1) Wite PHP scriptthat contains an array Savms of integers and printthe
+sum of the amay elements the user screen
+
+Your Answer
+
+)

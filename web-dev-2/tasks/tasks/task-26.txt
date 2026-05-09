@@ -1,0 +1,13 @@
+PHP Data Sources Practice
+™ The SimpleXML Parser
+
+> Using XML "notes xm!" shown in figure (14-8). Write PHP script that
+parse this file and display its content to the user screen using The
+SimpleXML Parser
+
+Your Answer.
+
+200
+
+Module 3: INTERACTIVE PHP WEBSITES WITH XML, JSON AND AJAX
+

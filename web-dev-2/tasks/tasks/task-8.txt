@@ -1,0 +1,10 @@
+SQL Databases with PHP Practice
+
+B Create a MySQL Database using MySQLi Object-oriented procedure
+
+Write PHP script that create a database named "myDB" based on MySQLi
+Object-oriented procedure
+
+Your Answer
+
+152

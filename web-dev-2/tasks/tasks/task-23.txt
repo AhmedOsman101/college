@@ -1,0 +1,14 @@
+Module 2: MYSQL DATABASES
+
+Popula
+
+MYSQL tables data PHP P
+
+> Modify the PHP srcript in figure (12-9) to use MySQLi Procedural
+Procedure to select and filter data from MySQL table and save your script
+to "ex1 php"
+
+ctice
+
+Your Answer
+

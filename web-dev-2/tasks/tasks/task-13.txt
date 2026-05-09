@@ -1,0 +1,10 @@
+Modul 1: DEVELOPING DYNAMIC WESSITES WITH PHB.
+
+B §_SESSION Superglobal variable
+
+ Waite PHP script that starts a session with the session_start()
+fonction then save the Susername in the session, and retrieve the
+session value to the user screen.
+
+Your Answer
+

@@ -1,0 +1,10 @@
+B §_COOKIE Superglobal variable
+
+« Wite PHP scriptthat creates a cookie with the setcookie() function
+at save the Susemame for 10 days. Then use fsef() Fnction to
+find out ifthe cookie i set or ot and retrieve the cookie value to
+the user screen
+
+Your Answer
+
+105,

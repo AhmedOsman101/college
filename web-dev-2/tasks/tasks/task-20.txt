@@ -1,0 +1,12 @@
+W Create a MySQL Database using MySQLi Procedural procedure
+
+> Change "ex1 php" to use using MySQLi Procedural procedure instead
+of MySQLi Object-oriented procedure and Save your script to
+rex) phy”
+
+Your Answer
+
+153
+
+Module 2: MYSQL DATABASES
+

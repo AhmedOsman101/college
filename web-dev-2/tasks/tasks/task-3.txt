@@ -1,0 +1,8 @@
+W Create a MySQL Database using PDO procedure
+
+> Change "ex1 php" to use using MySQLi Procedural procedure instead
+of PDO procedure and Save your script to "ex3 php"
+
+Your Answer
+
+154

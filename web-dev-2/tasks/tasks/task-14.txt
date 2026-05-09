@@ -1,0 +1,11 @@
+Operations on PHP variables Practice
+_—
+1) PHP Functions
+W User Defined Function
+
+(1) Write A PHP function that akes wo arguments S and Soum? and.
+prints the sum of the o arguments to the ser screen.
+
+Your Answer
+
+&

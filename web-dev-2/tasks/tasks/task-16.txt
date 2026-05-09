@@ -1,0 +1,10 @@
+> Modify the PHP srcript in figure (11-5) to use MySQLi PDO procedure
+to insert Multiple Records into MySQL table and save your script to
+“ex ph”
+
+165
+
+Module 2: MYSQL DATABASES
+
+Your Answer
+

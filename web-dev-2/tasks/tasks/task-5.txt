@@ -1,0 +1,12 @@
+MYSQL Tables Data Handling in PHP Practice
+
+> Modify the PHP srcript in figure (11-5) to use MySQL Procedural
+Procedure to insert Multiple Records into MySQL table and save your
+script to "ex1 php”
+
+Your Answer
+
+164
+
+Module 2: MYSQL DATABASES
+

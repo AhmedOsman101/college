@@ -1,0 +1,8 @@
+Lkt oy b
+
+> Using the Customers data in table (13-4), create PHP script to delete
+customer data where customer firstname~ "Luis" and save your script to
+rex2 "
+
+Your Answer
+

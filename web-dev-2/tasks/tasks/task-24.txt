@@ -1,0 +1,24 @@
+Modul 1: DEVELOPING DYNAMIC WESSITES WITH PHB.
+
+B Access Modifiers
+
+Based on the possibilty of applying the PHP access modifiers
+(public, private, and protected). Fill the following table by
+choosing on of [Not Applicable or Applicable] with the PHP
+elements,
+
+access
+modifier
+public
+private
+protected
+
+classes functions | variable
+
+B OOP Inheritance
+
+Create "Person’ class as the pareat that has Sname and Sage, and.
+"Tom’ class asthe child that has Stall vaiable
+
+Your Answer
+

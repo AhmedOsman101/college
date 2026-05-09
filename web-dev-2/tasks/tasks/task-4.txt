@@ -1,0 +1,10 @@
+SQL Update, Delete and Jos s e
+
+Oper
+
+> Using the Customers data in table (13-4), create PHP script o update
+customer firstname to "Max" where customer id = 3 and save your script
+to "ex1 php"
+
+Your Answer
+

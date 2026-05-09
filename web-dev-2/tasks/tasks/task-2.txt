@@ -1,0 +1,11 @@
+Module 1: DEVELOPING DYNAMIC WESSITES WITH PP
+
+2) Ifelse statement
+
+(1) Write PHP complete script that have fwo variables $x = 50 and Sy = 10,
+use the conditional iflelse statement to compare $a and Sb and priat out
+the two variables sum if $x is greater than Sy, ofherwise print the
+differece, save the code file to "ex] php"
+
+Your Answver:
+

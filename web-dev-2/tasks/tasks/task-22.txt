@@ -1,0 +1,10 @@
+s i s o sy P e e W g
+
+B Associative amays
+
+(1) Declare an PHP associative array that contains data for five persons,
+the person name will be the array key and the his age will be the array
+valne
+
+Your Answer:
+

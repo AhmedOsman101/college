@@ -1,0 +1,7 @@
+6) Do/While Statement
+
+(1) Implement the code in "ex3 php" with replacing while statement with
+dowhile statement and have the same oufput.
+
+Your Ansiwer
+

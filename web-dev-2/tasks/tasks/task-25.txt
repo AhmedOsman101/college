@@ -1,0 +1,20 @@
+Object-Oriented programming using PHP Practice
+
+B Create a PHP class
+
+« Wite PHP script that st Create a PHP employee clas that contains
+hree variable "Sname”, "Sage" and "Ssalary” and six methods
+"set_name”. " set_age”, " set_salary”. "get_name" "get_age” and
+"get_ salary” . Save you work fo "ex] php”.
+
+Your Answer
+
+B Objects Definition
+
+* Using the employee class you created in "ex] php". create PHP
+script that defines two objects Soha, Ssmith of the employee class.
+Save your work fo "ex2.php".
+
+Your Answer
+
+e

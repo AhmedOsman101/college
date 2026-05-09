@@ -1,0 +1,7 @@
+> Modify the PHP srcript in figure (12-11) to use MySQLi PDO procedure
+that selects the id, firstname and lastname columns from the MyGuests
+table. The records will be ordered by the Iastname column and save your
+script to "ex2 php”
+
+Your Answer
+

@@ -1,0 +1,8 @@
+™ The XML Expat Parser
+
+> Save SmyXMLData variable value, figure (14-1), to "books xml", Write
+PHP script that parse this file and display its content to the user screen
+using The XML Expat Parser.
+
+Your Answer.
+

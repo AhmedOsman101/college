@@ -1,0 +1,18 @@
+Modul 1: DEVELOPING DYNAMIC WESSITES WITH PHB.
+
+2) PHP Data Types
+
+(1) Create a PHP scrip thatdefines a variable named 1 and
+assiga the value "Welcome to PHP" to it then print both the
+variable name and value to the webpage and save the code to
+"ex3 php” fle.
+
+Answer.
+
+(2) Create a PHP script that defines fwo variables named $a.= 5.
+and $b = 7, and outputs the values of $a and $b to the webpage
+hen save your code to "ex4 php" file
+
+Answer.
+
+3

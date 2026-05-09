@@ -1,0 +1,7 @@
+« Using "ex3 php" script, try to implement PHP script that uses isset()
+fanction to find out f the cookie variable "Suserame" is set or not
+and retrieve the cookie value to the user screen Then save your
+script in "ex4 php"
+
+Your Answer
+

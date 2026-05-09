@@ -1,0 +1,18 @@
+Module 1: DEVELOPING DYNAMIC WESSITES WITH PP
+
+@
+
+3)
+
+A mber s called even if the number is divisible by 2 and is called
+odd fitis not divisible by 2. Given a sumber, write a PHP function to
+check whether it is 0dd or even in PHP.
+
+Your Answer
+
+Given a input number, write a PHP function that check whether it is
+prime o not in PHP.
+
+Your Answer
+
+3

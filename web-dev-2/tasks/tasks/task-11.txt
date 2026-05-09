@@ -1,0 +1,9 @@
+Module 1: DEVELOPING DYNAMIC WESSITES WITH PP
+
+4) Switchicase statement
+
+(1) Create a switch statement that will output "Hello" if Scolor is "red". and
+"welcome" if Scolor s "green’”
+
+Your Ansiwer
+

@@ -1,0 +1,9 @@
+W Passing variables between pages using cookies
+
+ Write PHP script that creates a cookie with the setcookie() function
+that save the Susername for 10 days. Then save your script in
+"ex3 php”
+
+Your Answer
+
+129

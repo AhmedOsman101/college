@@ -1,0 +1,18 @@
+Transferring Information between PHP Web Pages Practice
+T) Passing Data Between Pages in PHP.
+B Passing variable values befween pages using session
+
+ Waite PHP script that creates a cookie with the setcookie() function
+that save the Susermame for 10 days . Then save your script in
+vext php"
+
+Your Answer
+
+« Using "ex1.php” script, try o implement PHP script that uses isset()
+fanction to find out ifthe cookie variable "Susemame” is set or not,
+and retrieve the cookie value to the user screen. Then save your
+script in "ex2.php”
+
+Your Answer
+
+128

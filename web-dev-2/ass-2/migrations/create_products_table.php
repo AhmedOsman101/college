@@ -3,7 +3,7 @@
  * Migration: Create Products Table
  */
 
-function createProductsTable(mysqli $conn, bool $showOutput = true) {
+function createProductsTable(mysqli $conn) {
   try {
     $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS products (
@@ -17,19 +17,10 @@ CREATE TABLE IF NOT EXISTS products (
   )
 SQL;
 
-    if ($conn->query($sql) === true) {
-      if ($showOutput) {
-        echo "Products table created successfully!<br>";
-      }
-    } else {
+    if ($conn->query($sql) === false) {
       throw new Exception("Error creating table: $conn->error");
     }
   } catch (Exception $e) {
-    if ($showOutput) {
-      echo "Error: " . $e->getMessage();
-      return;
-    }
-
-    throw $e;
+    die("Error: " . $e->getMessage());
   }
 }

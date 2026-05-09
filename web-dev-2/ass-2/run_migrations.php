@@ -1,30 +1,42 @@
 <?php
 /**
  * Migration Runner
- * Run this file in your browser to set up the database tables.
- * Example: http://localhost/web_assignment2/run_migrations.php
+ * Runs automatically when needed to set up the database tables.
  */
 
-function runMigrations(bool $showOutput = true) {
-  global $conn;
+function runMigrations() {
+  // Globals are set from config/database.php file.
+  global $conn, $db_name, $databaseExists;
 
-  if ($showOutput) {
-    echo "<h2>Starting Migrations...</h2>";
+  if (!$databaseExists) {
+    // Create database if it doesn't exist
+    $sql = "CREATE DATABASE IF NOT EXISTS `$db_name`;";
+    if (!$conn->query($sql)) die("Error creating database: $conn->error");
+    $databaseExists = true;
   }
 
-  require_once __DIR__ . '/migrations/create_users_table.php';
-  require_once __DIR__ . '/migrations/create_products_table.php';
+  // Select the database
+  $conn->select_db($db_name);
 
-  createUsersTable($conn, $showOutput);
-  createProductsTable($conn, $showOutput);
+  $requiredTables = ['users', 'products'];
+  $missingTables = false;
 
-  if ($showOutput) {
-    echo "<h3>Migrations finished successfully!</h3>";
-    echo "<a href='index.php'>Go to Login Page</a>";
+  foreach ($requiredTables as $tableName) {
+    $checkTableSql = "SHOW TABLES LIKE '$tableName'";
+    $tableCheckResult = $conn->query($checkTableSql);
+
+    if (!$tableCheckResult || $tableCheckResult->num_rows === 0) {
+      $missingTables = true;
+      break;
+    }
   }
-}
 
-if (basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'] ?? '')) {
-  require_once __DIR__ . '/config/database.php';
-  runMigrations();
+  // If the tables are missing, create them.
+  if ($missingTables) {
+    require_once __DIR__ . '/migrations/create_users_table.php';
+    require_once __DIR__ . '/migrations/create_products_table.php';
+
+    createUsersTable($conn, $showOutput);
+    createProductsTable($conn, $showOutput);
+  }
 }

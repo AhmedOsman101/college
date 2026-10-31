@@ -1,0 +1,9 @@
+-std=c++23
+-Wall
+-Wextra
+
+-I
+/home/othman/work/college/computerGraphics/compat
+
+-include
+/home/othman/work/college/computerGraphics/compat/bgi_compat.hpp

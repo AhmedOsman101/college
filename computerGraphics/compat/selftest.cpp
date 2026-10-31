@@ -1,6 +1,7 @@
 // compat/selftest.cpp — must fail to compile before the compat header exists.
 #include <graphics.h>
-#include <conio.h>
+#include "conio.h"
+
 int main() {
   int gd = DETECT;
   int gm = VGAHI;                 // 640x480

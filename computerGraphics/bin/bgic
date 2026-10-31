@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# bgic — build (and run) a BGI program against SDL_bgi.
+#
+#   ./bin/bgic examples/section-1/line_skeleton.cpp
+#   ./bin/bgic examples/section-2/fills.cpp -c          # compile only
+#
+# Everything is delegated to cppc; this wrapper only adds what a BGI program
+# needs: the compat header (const-correct overloads for the char* API) and the
+# library. No environment variables are set — window size comes from the
+# program's own `int gm = VGAHI;`.
+set -euo pipefail
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CPPC="${CPPC:-/home/othman/scripts/cppc}"
+
+exec "$CPPC" -a "-include $REPO/compat/bgi_compat.hpp -I$REPO/compat -lSDL_bgi" "$@"

@@ -3,10 +3,12 @@
 // Const-correct shims for SDL_bgi's BGI API.
 //
 // SDL_bgi declares its string parameters as `char *`, following the original
-// BGI header, so C++23 rejects string literals: initgraph(&gd, &gm, "") and
-// outtextxy(x, y, "hi") do not compile. These inline overloads take
-// `const char *` and forward to the original functions, so course code that
-// passes literals compiles unchanged.
+// BGI header, so every string literal in course code triggers
+// -Wwrite-strings ("ISO C++ forbids converting a string constant to 'char*'").
+// On GCC that is a warning rather than an error, but it is five warnings per
+// file under the -Wall -Wextra builds cppc uses. These inline overloads take
+// `const char *` and forward to the original functions, which keeps the build
+// clean and stays correct if -Werror is ever added.
 //
 // Include it first (`-include compat/bgi_compat.hpp`) for files that include
 // <graphics.h> themselves: this header pulls it in, then its include guard

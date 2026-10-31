@@ -15,7 +15,7 @@
 - Library source: `https://github.com/sergev/SDL_bgi`, branch `main`, `VERSION` = `3.0.0`. The AUR package `sdl_bgi` (2.5.0) is **unusable** — its source URL `https://sourceforge.net/projects/libxbgi/files/SDL_bgi-2.5.0.tar.gz` returns 404 behind a Cloudflare challenge (a live `paru -S sdl_bgi` failed exactly this way). Do not retry AUR.
 - Install prefix `/usr/local`: `INC_DIR=/usr/local/include`, `SDL_INC=/usr/local/include/SDL2`, `LIB_DIR=/usr/local/lib`, `MANDIR=/usr/local/share/man/man3`. Verified on this machine: `/usr/local/lib` is in `ld`'s `SEARCH_DIR` and `/etc/ld.so.conf.d/usr-local-lib.conf` covers runtime, so no env vars and no `-Wl,-rpath` are needed.
 - Build the library with **default** include paths (real SDL2 lives in `/usr/include/SDL2`), then apply the `/usr/local` overrides on the *install* step only. SDL_bgi's Linux `Makefile` hardcodes `INC_DIR`/`SDL_INC`/`LIB_DIR` for compiling and installing alike.
-- Never delete `graphics-lib/`. It is the course's original WinBGIm artifact set and stays as provenance: `libbgi.a` is an **Intel i386 COFF** archive, and `graphics.h`/`winbgim.h` include `<windows.h>`, so they can never build natively on Linux.
+- `graphics-lib/` and `readme.txt` (the lecturer's WinBGIm Windows artifacts) have been **removed by the user and must not be re-added**. For the record: `libbgi.a` was an Intel i386 COFF archive and its `graphics.h`/`winbgim.h` included `<windows.h>`, so they could never build natively on Linux. `docs/graphics-on-linux.md` keeps the Wine fallback for anyone who still needs them.
 - **The vault is a starting point, not a contract: setup may differ per machine; core API calls may not.** Every program here writes its own setup line —
 
   ```cpp
@@ -46,7 +46,7 @@ SDL_bgi 3.0.0 provides every symbol above (verified in `src/SDL_bgi.h`). Known g
 
 ## Review Focus
 
-1. **C++23 rejects string literals for `char*` parameters.** Every `outtextxy(x, y, "text")` in the material is ill-formed as C++ (`ISO C++ forbids converting a string constant to 'char*'`). A reader expects the material's calls to compile; the const-correct overloads must make that happen with zero warnings.
+1. **String literals meet `char*` parameters.** SDL_bgi declares `initgraph(int*, int*, char*)` and `outtextxy(int,int,char*)`, so every literal in the material triggers `-Wwrite-strings`. Verified on GCC 16.2.1: this is a **warning, not an error** (5 warnings per example file, exit status 0) — an earlier draft of this plan wrongly called it an error. The const-correct overloads must remove those warnings so `-Wall -Wextra` builds stay clean, and must keep working if anyone ever adds `-Werror`.
 2. **All material assumes a 640×480 screen.** Coordinates like `(320,240)`, `560`, `420` are hardcoded, yet SDL_bgi 3.0.0 defaults to 800×600 and the vault leaves `gm` uninitialized. Expectation: `(320,240)` is the centre of the window and `getmaxx()` reports 639, with no environment variables in play.
 3. **`getch()` is what keeps the window alive.** Expectation: the window persists until a key is pressed, and `closegraph()` tears it down. Under no `DISPLAY` (SSH, CI) SDL cannot open a window at all; the documented answer is `SDL_VIDEODRIVER=dummy`, and no smoke test may hang forever.
 4. **`floodfill` on an unclosed shape fills the whole screen** — or, with a `border` argument that no longer matches the outline after a later `setcolor`, silently escapes the intended region. This is the historic BGI crash; expectation is a fill that stays put.
@@ -58,8 +58,6 @@ SDL_bgi 3.0.0 provides every symbol above (verified in `src/SDL_bgi.h`). Known g
 
 ```
 computerGraphics/
-├── readme.txt                      (existing — untouched)
-├── graphics-lib/                   (existing — provenance only, untouched)
 ├── compat/
 │   ├── bgi_compat.hpp              const-correct overloads; pre-included by bgic
 │   ├── conio.h                     clrscr/gotoxy; getch/kbhit come from graphics.h
@@ -211,7 +209,7 @@ int main() {
 cd /home/othman/work/college/computerGraphics
 g++ -std=c++23 -c compat/selftest.cpp -o /tmp/opencode/selftest.o
 ```
-Expected: FAIL — `ISO C++ forbids converting a string constant to 'char*'` and `conio.h: No such file or directory`.
+Expected: FAIL — `conio.h: No such file or directory`. Then, to see the literal problem on its own, compile again with only `-I compat` (no `-include`): expect five `-Wwrite-strings` warnings (`ISO C++ forbids converting a string constant to 'char*'`) and **exit 0** — GCC 16 treats it as a warning.
 
 - [ ] **Step 3: Implement the two headers** exactly per the Interfaces block. No other symbols, no `using namespace`, nothing that changes BGI semantics.
 
@@ -319,6 +317,8 @@ git commit -m "feat(graphics): add bgic wrapper and Section 1 skeleton example"
 - Consumes: `bgic`; `putpixel`, `line`, `getmaxx`/`getmaxy`; standard setup line.
 
 - [ ] **Step 1: Author `dda_bresenham.cpp`** — port `ddaLine()` verbatim from `Section-1.md:133-149`, draw the lecture line (2,2)→(10,6) with `putpixel` in one colour, then the Bresenham pixel list from `Section-1.md:159` in another, and print both lists to stdout so the two algorithms are compared textually as the material does. Offset the drawn copies (e.g. start at 120,120) so the pixels are visible.
+
+  **Bresenham must use the decision-parameter form** `p = 2dy − dx` (initialise `p`, then `p += 2dy` when `p < 0`, else `y += sy; p += 2(dy − dx)`). This line has slope exactly 0.5, so every step lands on a pixel corner and the tie-break decides the result: the decision-parameter form prints `(3,3) (5,4) (7,5) (9,6)`, while an error-accumulator testing `e2 < dx` prints `(3,2) (5,3) (7,4) (9,5)`. Only the first agrees with the lecture table; both are valid rasterisations, so this is a formulation choice, not a bug to "fix" in the material.
 
 - [ ] **Step 2: Run it and check the printed lists**
 
@@ -543,6 +543,15 @@ git commit -m "test(graphics): verification sweep results for all examples"
 
 ## Open Questions
 
-1. `graphics-lib/` and `readme.txt` are the lecturer's Windows/AUR-era instructions. The plan leaves both untouched; converting them into a "Windows reference" section of `docs/graphics-on-linux.md` is a one-line follow-up if wanted.
-2. Task-1 is graded work. If the grader requires byte-exact WinBGIm rendering (VGA DAC colours, bitmap font rasterisation), the Wine route documented in Task 8 is the escape hatch — proven to link, not yet run.
-3. `arc(320,240,90,90,100)` draws a dot under real BGI and may draw nothing under SDL_bgi (`Section-2.md:126-127`). Either way it is a documented difference, not a bug to patch.
+Resolved during implementation:
+
+1. ~~`graphics-lib/` and `readme.txt`~~ — removed by the user; the Wine recipe now
+   lives in `docs/graphics-on-linux.md` as the fallback.
+2. ~~`arc(...,90,90,...)` may draw nothing under SDL_bgi~~ — it draws a single dot,
+   matching the material. Confirmed on screen in `circles_arcs_sectors.cpp`.
+
+Still open:
+
+1. Task-1 is graded work. If the grader demands byte-exact WinBGIm rendering (VGA
+   DAC colours, bitmap font rasterisation), the Wine route in
+   `docs/graphics-on-linux.md` is the escape hatch — proven to link, not yet run.

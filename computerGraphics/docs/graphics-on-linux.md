@@ -9,10 +9,10 @@ headers. No VM, no Wine. See
 
 | File | Path |
 | --- | --- |
-| `graphics.h` | `/usr/local/include/graphics.h` |
-| `SDL_bgi.h` | `/usr/local/include/SDL2/SDL_bgi.h` |
-| `libSDL_bgi.so` | `/usr/local/lib/libSDL_bgi.so` |
-| man page | `/usr/local/share/man/man3/graphics.3.gz` |
+| `graphics.h` | `/usr/include/graphics.h` |
+| `SDL_bgi.h` | `/usr/include/SDL2/SDL_bgi.h` |
+| `libSDL_bgi.so` | `/usr/lib/libSDL_bgi.so` |
+| man page | `/usr/share/man/man3/graphics.3.gz` |
 
 Reinstalling from scratch:
 
@@ -20,10 +20,10 @@ Reinstalling from scratch:
 git clone --depth 1 https://github.com/sergev/SDL_bgi.git /tmp/SDL_bgi
 make -C /tmp/SDL_bgi/src
 sudo make -C /tmp/SDL_bgi/src install \
-  LIB_DIR=/usr/local/lib \
-  SDL_INC=/usr/local/include/SDL2 \
-  INC_DIR=/usr/local/include \
-  MANDIR=/usr/local/share/man/man3
+  LIB_DIR=/usr/lib \
+  SDL_INC=/usr/include/SDL2 \
+  INC_DIR=/usr/include \
+  MANDIR=/usr/share/man/man3
 sudo ldconfig
 ```
 

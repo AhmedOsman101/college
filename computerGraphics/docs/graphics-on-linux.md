@@ -9,27 +9,65 @@ headers. No VM, no Wine. See
 
 | File | Path |
 | --- | --- |
-| `graphics.h` | `/usr/include/graphics.h` |
-| `SDL_bgi.h` | `/usr/include/SDL2/SDL_bgi.h` |
-| `libSDL_bgi.so` | `/usr/lib/libSDL_bgi.so` |
-| man page | `/usr/share/man/man3/graphics.3.gz` |
+| `graphics.h` | `/usr/local/include/graphics.h` |
+| `SDL_bgi.h` | `/usr/local/include/SDL2/SDL_bgi.h` (annotated, see below) |
+| `libSDL_bgi.so` | `/usr/local/lib/libSDL_bgi.so` |
+| man page | `/usr/local/share/man/man3/graphics.3.gz` |
 
 Reinstalling from scratch:
 
 ```bash
 git clone --depth 1 https://github.com/sergev/SDL_bgi.git /tmp/SDL_bgi
 make -C /tmp/SDL_bgi/src
-sudo make -C /tmp/SDL_bgi/src install \
-  LIB_DIR=/usr/lib \
-  SDL_INC=/usr/include/SDL2 \
-  INC_DIR=/usr/include \
-  MANDIR=/usr/share/man/man3
+sudo make -C /tmp/SDL_bgi/src install LIB_DIR=/usr/local/lib SDL_INC=/usr/local/include/SDL2 INC_DIR=/usr/local/include MANDIR=/usr/local/share/man/man3
 sudo ldconfig
 ```
 
 Build first, override paths on `install` only: the Linux `Makefile` uses
 `INC_DIR`/`SDL_INC` both to compile and to install, and the real SDL2 headers
 live in `/usr/include/SDL2`.
+
+## Annotated header (editor hints)
+
+Upstream ships `SDL_bgi.h` with unnamed parameters —
+`void rectangle (int, int, int, int);` — so the editor shows no signature help
+and no description. The installed header is a **generated** copy that adds a
+Doxygen block above each of the 146 declarations and names every parameter:
+
+```c
+/**
+ * Draws a rectangle delimited by (left,top) and (right,bottom).
+ *
+ * @param left x of the left edge, pixels
+ * @param top y of the top edge, pixels (top < bottom, y grows downward)
+ * @param right x of the right edge, pixels
+ * @param bottom y of the bottom edge, pixels
+ *
+ * Draws four edges in the current colour and leaves the interior untouched.
+ * Add bar() with the same coordinates to fill it; bar() alone draws no border.
+ */
+void rectangle (int left, int top, int right, int bottom);
+```
+
+Do not hand-edit it — a reinstall of SDL_bgi overwrites it. Regenerate:
+
+```bash
+git clone --depth 1 https://github.com/sergev/SDL_bgi.git /tmp/SDL_bgi
+python3 tools/annotate-sdlbgi.py \
+  --c      /tmp/SDL_bgi/src/SDL_bgi.c \
+  --header vendor/SDL_bgi-3.0.0.h \
+  --out    /tmp/SDL_bgi.annotated.h
+sudo cp /tmp/SDL_bgi.annotated.h /usr/local/include/SDL2/SDL_bgi.h
+```
+
+`vendor/SDL_bgi-3.0.0.h` is the pristine upstream header at the version this
+repo targets; the script never reads the installed copy, so the output is
+reproducible. Summaries and parameter names come from upstream's own
+`src/SDL_bgi.c`; the curated table at the top of the script overrides names for
+the functions this course calls (`left/top/right/bottom` instead of
+`x1/y1/x2/y2`) and adds the notes — units, that y grows downward, that `bar()`
+draws no border, that `arc` with equal angles draws one pixel. A pristine
+backup of the original header sits at `SDL_bgi.h.orig` beside it.
 
 ## Building a program
 

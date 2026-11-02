@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# bgic — build (and run) a BGI program against SDL_bgi.
+# bgic — build, run, or watch a BGI program against SDL_bgi.
 #
 #   ./bin/bgic examples/section-1/line_skeleton.cpp
 #   ./bin/bgic examples/section-2/fills.cpp -c          # compile only
+#   ./bin/bgic -w examples/section-2/fills.cpp          # rebuild + rerun on save
 #
 # Everything is delegated to cppc; this wrapper only adds what a BGI program
 # needs: the compat header (const-correct overloads for the char* API) and the
@@ -10,7 +11,64 @@
 # program's own `int gm = VGAHI;`.
 set -euo pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CPPC="${CPPC:-/home/othman/scripts/cppc}"
+SELF="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+REPO="$(cd "$(dirname "${SELF}")/.." && pwd)"
+COMPAT_ARGS="-include ${REPO}/compat/bgi_compat.hpp -I${REPO}/compat -lSDL_bgi"
 
-exec "$CPPC" -a "-include $REPO/compat/bgi_compat.hpp -I$REPO/compat -lSDL_bgi" "$@"
+usage() {
+  cat <<'EOF'
+usage: bgic [-w|--watch] <file.cpp> [cppc options]
+
+  -w, --watch   rebuild on save and restart the program
+  -h, --help    show this text
+
+Everything else goes to cppc unchanged: -c compiles without running,
+-o names the output, -q silences the build.
+
+Watch mode reruns the build whenever a C or C++ file under the current
+directory changes, restarting the program if it is still running.
+EOF
+}
+
+watch=0
+args=()
+for arg in "$@"; do
+  case "${arg}" in
+    -w | --watch) watch=1 ;;
+    -h | --help)
+                usage
+                       exit 0
+                              ;;
+    *)          args+=("${arg}") ;;
+  esac
+done
+
+if ((${#args[@]} == 0)); then
+  usage >&2
+  exit 1
+fi
+
+if ((! watch)); then
+  exec cppc -a "${COMPAT_ARGS}" "${args[@]}"
+fi
+
+if ! command -v watchexec >/dev/null 2>&1; then
+  echo "bgic: watch mode needs watchexec (pacman -S watchexec)" >&2
+  exit 1
+fi
+
+# A BGI program blocks in getch(), so watchexec's default --on-busy-update is
+# useless here: it ignores the save until the window closes. --restart kills
+# the old run and starts the new one. SDL installs its own SIGTERM handler, so
+# escalate to SIGKILL at once instead of waiting out the 10 s default.
+#
+# --shell=none matters: in the default mode watchexec joins argv into one
+# string and hands it to a shell, which re-splits it — a path with a space or
+# an `-a "-O2 -DFOO"` list would arrive as separate arguments.
+exec watchexec \
+  --restart \
+  --shell=none \
+  --stop-signal TERM \
+  --stop-timeout 0s \
+  --exts cpp,cc,cxx,c,h,hpp \
+  -- "${SELF}" "${args[@]}"

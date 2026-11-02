@@ -75,6 +75,7 @@ backup of the original header sits at `SDL_bgi.h.orig` beside it.
 cd computerGraphics
 ./bin/bgic examples/section-1/line_skeleton.cpp -o /tmp/line
 ./bin/bgic examples/section-2/fills.cpp -c -o /tmp/fills   # compile only
+./bin/bgic -w examples/section-2/fills.cpp                 # rebuild on save
 ```
 
 `bin/bgic` is a thin wrapper over `cppc` that adds:
@@ -84,6 +85,29 @@ cd computerGraphics
 ```
 
 It sets **no environment variables**. Anything `cppc` accepts passes through.
+
+### Watch mode
+
+`-w` (or `--watch`) runs the build through `watchexec`, so saving a `.c`,
+`.cpp` or header rebuilds and relaunches the program:
+
+```bash
+./bin/bgic -w tasks/task-1/pie_chart.cpp
+```
+
+Two details that matter for a BGI program:
+
+- The program blocks in `getch()`, and watchexec's default is to *ignore*
+  file events while a command runs. `--restart` is what kills the old window
+  and starts the new one.
+- SDL installs its own `SIGTERM` handler and swallows it, so a plain
+  terminate leaves the old window alive. The wrapper passes
+  `--stop-timeout 0s` to escalate to `SIGKILL` immediately.
+
+It watches the current directory recursively, filtered to C/C++ sources and
+headers, so running it from `computerGraphics/` means editing
+`compat/bgi_compat.hpp` also triggers a rebuild. Ctrl-C stops the watcher and
+the program with it. A compile error just prints and the watcher keeps running.
 
 ## The two rules that differ from the material
 

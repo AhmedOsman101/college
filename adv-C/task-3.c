@@ -236,75 +236,75 @@ float shapeArea(Shape shape) {
 }
 
 int main(int argc, char **argv) {
-  // printf("===== Top Student =====\n");
-  // int studentsLength; scanf("%d", &studentsLength);
-  // Student students[studentsLength];
-  // for (int i = 0; i < studentsLength; i++) {
-  //   // Read NAME_LENGTH bytes only, avoids overflow.
-  //   // The string expands to "%24s %d %f" at compilation time.
-  // scanf(
-  // "%" STRINGIFY(NAME_LENGTH) "s %d %f",
-  // students[i].name,
-  // &students[i].id,
-  // &students[i].gpa
-  // );
-  // }
-  // topStudent(students, studentsLength);
+  printf("===== Top Student =====\n");
+  int studentsLength; scanf("%d", &studentsLength);
+  Student students[studentsLength];
+  for (int i = 0; i < studentsLength; i++) {
+    // Read NAME_LENGTH bytes only, avoids overflow.
+    // The string expands to "%24s %d %f" at compilation time.
+    scanf(
+      "%" STRINGIFY(NAME_LENGTH) "s %d %f",
+      students[i].name,
+      &students[i].id,
+      &students[i].gpa
+    );
+  }
+  topStudent(students, studentsLength);
 
-  // printf("\n===== Library Search =====\n");
-  // int booksLength; scanf("%d", &booksLength);
-  // Book books[booksLength]; struct Date date;
-  // for (int i = 0; i < booksLength; i++) {
-  //   // Read NAME_LENGTH bytes only, avoids overflow.
-  //   // The string expands to "%24s %d %f" at compilation time.
-  // scanf(
-  // "%" STRINGIFY(BUFFER_SIZE) "s %d %d %d",
-  // books[i].title,
-  // &books[i].date.day,
-  // &books[i].date.month,
-  // &books[i].date.year
-  // );
-  // }
-  // scanf("%d %d %d", &date.day, &date.month, &date.year);
-  // librarySearch(books, booksLength, date);
+  printf("\n===== Library Search =====\n");
+  int booksLength; scanf("%d", &booksLength);
+  Book books[booksLength]; struct Date date;
+  for (int i = 0; i < booksLength; i++) {
+    // Read NAME_LENGTH bytes only, avoids overflow.
+    // The string expands to "%24s %d %f" at compilation time.
+    scanf(
+      "%" STRINGIFY(BUFFER_SIZE) "s %d %d %d",
+      books[i].title,
+      &books[i].date.day,
+      &books[i].date.month,
+      &books[i].date.year
+    );
+  }
+  scanf("%d %d %d", &date.day, &date.month, &date.year);
+  librarySearch(books, booksLength, date);
 
-  // printf("\n===== Int or Float =====\n");
-  // int choice; scanf("%d", &choice);
-  // intOrFloat(choice);
+  printf("\n===== Int or Float =====\n");
+  int choice; scanf("%d", &choice);
+  intOrFloat(choice);
 
-  // printf("\n===== Student or Guest =====\n");
-  // int peopleLength; scanf("%d", &peopleLength);
-  // Person people[peopleLength];
-  // for (int i = 0; i < peopleLength; i++) {
-  // scanf("%d", &people[i].type);
-  // studentOrGuest(&people[i]);
-  // }
+  printf("\n===== Student or Guest =====\n");
+  int peopleLength; scanf("%d", &peopleLength);
+  Person people[peopleLength];
+  for (int i = 0; i < peopleLength; i++) {
+    scanf("%d", &people[i].type);
+    studentOrGuest(&people[i]);
+  }
 
-  // printf("\n===== Days of the Week =====\n");
-  // Day day; scanf("%d", &day);
-  // printf("Next day: %s\n", nextDay(day));
-  // printf("Weekend: %s\n", isWeekend(day) ? "True" : "False");
+  printf("\n===== Days of the Week =====\n");
+  Day day; scanf("%d", &day);
+  printf("Next day: %s\n", nextDay(day));
+  printf("Weekend: %s\n", isWeekend(day) ? "True" : "False");
 
-  // printf("\n===== Error Codes =====\n");
-  // ErrorCode code; scanf("%d", &code);
-  // printf("%s\n", errorCode2msg(code));
+  printf("\n===== Error Codes =====\n");
+  ErrorCode code; scanf("%d", &code);
+  printf("%s\n", errorCode2msg(code));
 
-  // printf("\n===== Variant Data =====\n");
-  // int varsLength; scanf("%d", &varsLength);
-  // VariableData vars[varsLength];
-  // for (int i = 0; i < varsLength; i++) {
-  // readVariant(&vars[i]);
-  // printVariant(vars[i]);
-  // }
+  printf("\n===== Variant Data =====\n");
+  int varsLength; scanf("%d", &varsLength);
+  VariableData vars[varsLength];
+  for (int i = 0; i < varsLength; i++) {
+    readVariant(&vars[i]);
+    printVariant(vars[i]);
+  }
 
   printf("\n===== Shape Manager =====\n");
-  float areaTotal = 0.0; char *output = "\r";
+  float areaTotal = 0.0; char output[4096] = "";
   while (true) {
     printf(
       "\n1) Add circle (radius)\n"
       "2) Add rectangle (width, height)\n"
       "3) Add triangle (base, height)\n"
-      "4) Print all shapes and exit\n\n"
+      "4) Print all shapes and exit\n"
     );
     int choice; scanf("%d", &choice);
     switch (choice) {
@@ -313,9 +313,7 @@ int main(int argc, char **argv) {
           readShape(&shape);
           float area = shapeArea(shape);
           areaTotal += area;
-          char *buff;
-          sprintf(buff, "\nCircle area = %.2f\n", area);
-          strcat(buff, output);
+          sprintf(output + strlen(output), "\nCircle area = %.2f", area);
           break;
         }
       case 2: {
@@ -323,7 +321,7 @@ int main(int argc, char **argv) {
           readShape(&shape);
           float area = shapeArea(shape);
           areaTotal += area;
-          sprintf(output, "%s\nRectangle area = %.2f\n", output, area);
+          sprintf(output + strlen(output), "\nRectangle area = %.2f", area);
           break;
         }
       case 3: {
@@ -331,11 +329,11 @@ int main(int argc, char **argv) {
           readShape(&shape);
           float area = shapeArea(shape);
           areaTotal += area;
-          sprintf(output, "%s\nTriangle area = %.2f\n", output, area);
+          sprintf(output + strlen(output), "\nTriangle area = %.2f", area);
           break;
         }
       case 4:
-        printf("Total area = %.2f\n", areaTotal);
+        printf("%s\nTotal area = %.2f\n", output, areaTotal);
         exit(0);
       default:
         fprintf(stderr, "Invalid choice '%d'. Valid choices are: 1-4\n", choice);

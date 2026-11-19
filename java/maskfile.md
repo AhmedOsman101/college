@@ -1,24 +1,37 @@
 # Java Project
 
-## build (file)
+## build (path)
 
-> Compile a single Java file
+> Compile a Java file or all files in a directory
 
 ```bash
 set -e
 outDir="out"
 mkdir -p "${outDir}"
-javac -d "${outDir}" "src/${file}.java"
+# If path ends with .java, compile that file; otherwise compile all .java files in the directory
+if [[ "${path}" == *.java ]]; then
+  javac -d "${outDir}" "src/${path}"
+elif [[ -d "src/${path}" ]]; then
+  javac -d "${outDir}" src/${path}/*.java
+else
+  echo "error: no such file or directory: src/${path}" >&2
+  exit 1
+fi
 ```
 
-## run (file)
+## run (path)
 
-> Compile and run a single Java file
+> Compile and run a Java file
 
 ```bash
 set -e
-mask build "${file}"
-className="${file^}"
+# If the file lives in a subdirectory, compile the whole directory so its sibling classes are available
+if [[ "${path}" == */* ]]; then
+  $MASK build "$(dirname "${path}")"
+else
+  $MASK build "${path}"
+fi
+className=$(basename "${path}" .java)
 java -cp "out" "${className}"
 ```
 
@@ -38,6 +51,6 @@ javac -d "${outDir}" src/*.java
 > Compile all and run Main
 
 ```bash
-mask build-all
+$MASK build-all
 java -cp "out" Main
 ```

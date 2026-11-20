@@ -1,4 +1,4 @@
-class Student {
+public class Student {
   // `static` counter shared across all Student instances
   static int totalStudents = 0;
 
@@ -28,7 +28,7 @@ class Student {
 
   // Copy constructor
   Student(Student other) {
-    this.id = ++totalStudents;
+    this.id = other.id;
     this.name = other.name;
     this.age = other.age;
     this.courses = new Course[other.courses.length];
@@ -69,7 +69,7 @@ class Student {
 
   boolean enroll(Course course) {
     if (courseCount >= courses.length) return false;
-    courses[courseCount++] = course;
+    courses[courseCount++] = new Course(course);
     return true;
   }
 

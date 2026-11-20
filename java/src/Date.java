@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Date {
   public int year;
   public int month;

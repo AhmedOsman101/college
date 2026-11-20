@@ -1,4 +1,4 @@
-class Course {
+public class Course {
   // `static final` defines a constant value
   static final int MAX_CREDITS = 6;
 

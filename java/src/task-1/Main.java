@@ -1,7 +1,7 @@
 import java.io.PrintStream;
 import java.util.Scanner;
 
-class Main {
+public class Main {
   // `static final` defines a constant value
   static final Scanner stdin = new Scanner(System.in);
   static final PrintStream stdout = System.out;
@@ -9,8 +9,6 @@ class Main {
   static void task1() {
     // Parameterized constructors
     Course oop = new Course("CS201", "Object-Oriented Programming", 3, "Computer Science");
-    Course ds  = new Course("CS202", "Data Structures", 4, "Computer Science");
-    Course db  = new Course("CS301", "Databases", 3, "Computer Science");
 
     // Default constructor + setters
     Course math = new Course();

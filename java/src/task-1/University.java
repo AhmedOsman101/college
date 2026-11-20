@@ -1,4 +1,4 @@
-class University {
+public class University {
   private final String name; // `final`: name never changes
   private Student[] students; // Has-A relationship
   private Course[] courses;   // Has-A relationship
@@ -40,13 +40,13 @@ class University {
 
   boolean addCourse(Course course) {
     if (courseCount >= courses.length) return false;
-    courses[courseCount++] = course;
+    courses[courseCount++] = new Course(course);
     return true;
   }
 
   boolean addStudent(Student student) {
     if (studentCount >= students.length) return false;
-    students[studentCount++] = student;
+    students[studentCount++] = new Student(student);
     return true;
   }
 
